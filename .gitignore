@@ -1,0 +1,5 @@
+# output directory files
+output/
+
+# output text
+.txt
