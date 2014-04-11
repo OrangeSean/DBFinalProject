@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Thursday-April-10-2014  
+--  File created - Thursday-April-10-2014   
 --------------------------------------------------------
 REM INSERTING into SKILL
 SET DEFINE OFF;
