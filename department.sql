@@ -13,3 +13,7 @@ Insert into HOMER.DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values (
 Insert into HOMER.DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('HELPD','Help Desk','Samar Quezon City','(345) 773-7910',null);
 Insert into HOMER.DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('HR','Human Resource','Osmena Makati City','(638) 439-5070',null);
 Insert into HOMER.DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('EXECB','Executive Board','Osmena Makati City','(751) 928-7667',null);
+Insert into HOMER.DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('ADMIN','Administration','Victoria Square, Adelaide','(408) 932-8865',null);
+
+			
+commit;

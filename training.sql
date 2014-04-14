@@ -13,3 +13,4 @@ Insert into HOMER.TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) 
 Insert into HOMER.TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (8,'SQL1',87,to_date('12-MAY-14','DD-MON-RR'),'Mainframe and assembly','Too long.');
 Insert into HOMER.TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (9,'MOBDA',4,to_date('13-MAY-14','DD-MON-RR'),'Wicket, Thymeleaf','Need to explain better the concept of aardvark.');
 Insert into HOMER.TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (10,'MOBDA',36,to_date('14-MAY-14','DD-MON-RR'),'IOS Mobile Development','It would be nice if snacks were given.');
+commit;

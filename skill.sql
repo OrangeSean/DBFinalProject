@@ -13,3 +13,4 @@ Insert into SKILL (CODE,DESCRIPTION) values ('PRJM2','IT Project mangement for P
 Insert into SKILL (CODE,DESCRIPTION) values ('RUBY','Web development with Ruby on rails');
 Insert into SKILL (CODE,DESCRIPTION) values ('PYTHO','Web development with Python');
 Insert into SKILL (CODE,DESCRIPTION) values ('MOBDA','Android mobile development');
+commit;
