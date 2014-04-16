@@ -1,13 +1,11 @@
-ALTER TABLE department drop constraint department_managerid_FK;
-ALTER TABLE employee drop constraint employee_superid_FK;
+ALTER TABLE employee drop constraint employee_deptcode_FK;
 DROP TABLE training purge;
 DROP TABLE assignment purge;
 DROP TABLE project purge;
-DROP TABLE client purge;
-DROP TABLE skill purge; 
-DROP TABLE employee purge;
 DROP TABLE department purge;
-
+DROP TABLE employee purge;
+DROP TABLE client purge;
+DROP TABLE skill purge;
 
 CREATE TABLE skill
 ( Code VARCHAR2(5),
@@ -16,16 +14,16 @@ CREATE TABLE skill
 );
 
 CREATE TABLE client
-( Client_ID VARCHAR2(15),
+( Client_ID VARCHAR2(4),
   Name      VARCHAR2(80),
-  Street    VARCHAR2(15),
-  City 		VARCHAR2(15),
-  State		VARCHAR2(15), 
+  Street    VARCHAR2(50),
+  City 		VARCHAR2(20),
+  State		VARCHAR2(2), 
   Zip_Code  VARCHAR2(5), 
-  Industry  VARCHAR2(15),
-  Web_Address VARCHAR2(30),
+  Industry  VARCHAR2(20),
+  Web_Address VARCHAR2(80),
   Phone		  VARCHAR2(15), 
-  Contact_Name VARCHAR(15),
+  Contact_Name VARCHAR(30),
   CONSTRAINT client_clientid_PK PRIMARY KEY (Client_ID)
 );
 
@@ -54,12 +52,12 @@ CREATE TABLE department
 );
 
 CREATE TABLE project
-( Project_Number NUMBER(5),
+( Project_Number NUMBER(2),
   Name VARCHAR2(80), 
   Start_Date DATE DEFAULT SYSDATE,
-  Total_Cost NUMBER(5), 
-  Dept_Code VARCHAR2(5), 
-  Client_ID VARCHAR2(15),
+  Total_Cost NUMBER(10), 
+  Dept_Code VARCHAR2(2), 
+  Client_ID VARCHAR2(4),
   CONSTRAINT project_projnumber_PK PRIMARY KEY (Project_Number),
   CONSTRAINT project_deptcode_FK FOREIGN KEY (Dept_Code) REFERENCES Department (Dept_Code),
   CONSTRAINT project_clientid_FK FOREIGN KEY (Client_ID) REFERENCES Client (Client_ID)
@@ -91,8 +89,4 @@ CREATE TABLE training
   CONSTRAINT training_empnum_FK FOREIGN KEY (Emp_Num) REFERENCES Employee (Emp_Num)
 );
 
-
 ALTER TABLE EMPLOYEE ADD CONSTRAINT employee_deptcode_FK FOREIGN KEY (Dept_Code) REFERENCES Department (Dept_Code);
-
-
-
