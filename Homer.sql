@@ -60,7 +60,8 @@ CREATE TABLE project
   Client_ID VARCHAR2(4),
   CONSTRAINT project_projnumber_PK PRIMARY KEY (Project_Number),
   CONSTRAINT project_deptcode_FK FOREIGN KEY (Dept_Code) REFERENCES Department (Dept_Code),
-  CONSTRAINT project_clientid_FK FOREIGN KEY (Client_ID) REFERENCES Client (Client_ID)
+  CONSTRAINT project_clientid_FK FOREIGN KEY (Client_ID) REFERENCES Client (Client_ID),
+  CONSTRAINT project_dept_admin_CK check (Dept_Code != 'ADMIN')
 );
 
 CREATE TABLE assignment

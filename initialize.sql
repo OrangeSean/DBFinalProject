@@ -1,5 +1,6 @@
 --Sean's local (Change to point to your local, comment out mine below and run in sqlplus
 -- please don't delete mine below so we dont have to keep changing. Thanks!
+set echo on
 start D:\DBM\FP\Homer.sql;
 start D:\DBM\FP\skill.sql;
 start D:\DBM\FP\department.sql;
@@ -12,6 +13,7 @@ start D:\DBM\FP\assignment.sql;
 spool out;
 
 --Celine's Local
+set echo on
 spool C:\Users\ChibeePatag\git\DBFinalProject\session.txt
 start C:\Users\ChibeePatag\git\DBFinalProject\Homer.sql;
 start C:\Users\ChibeePatag\git\DBFinalProject\skill.sql;
