@@ -56,7 +56,7 @@ CREATE TABLE project
   Name VARCHAR2(80), 
   Start_Date DATE DEFAULT SYSDATE,
   Total_Cost NUMBER(10), 
-  Dept_Code VARCHAR2(2), 
+  Dept_Code VARCHAR2(5), 
   Client_ID VARCHAR2(4),
   CONSTRAINT project_projnumber_PK PRIMARY KEY (Project_Number),
   CONSTRAINT project_deptcode_FK FOREIGN KEY (Dept_Code) REFERENCES Department (Dept_Code),
