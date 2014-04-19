@@ -52,13 +52,13 @@ CREATE TABLE department
 );
 
 CREATE TABLE project
-( Project_Number NUMBER(2),
+( Proj_Number NUMBER(2),
   Name VARCHAR2(80), 
   Start_Date DATE DEFAULT SYSDATE,
   Total_Cost NUMBER(10), 
   Dept_Code VARCHAR2(5), 
   Client_ID VARCHAR2(4),
-  CONSTRAINT project_projnumber_PK PRIMARY KEY (Project_Number),
+  CONSTRAINT project_projnumber_PK PRIMARY KEY (Proj_Number),
   CONSTRAINT project_deptcode_FK FOREIGN KEY (Dept_Code) REFERENCES Department (Dept_Code),
   CONSTRAINT project_clientid_FK FOREIGN KEY (Client_ID) REFERENCES Client (Client_ID),
   CONSTRAINT project_dept_admin_CK check (Dept_Code != 'ADMIN')
@@ -72,7 +72,7 @@ CREATE TABLE assignment
   Date_Ended DATE, 
   Hours_Used NUMBER(5),
   CONSTRAINT assignment_assignnum_PK PRIMARY KEY (Assign_Num),
-  CONSTRAINT assignment_projectnumber_FK FOREIGN KEY(Proj_Number) REFERENCES Project (Project_Number),
+  CONSTRAINT assignment_projectnumber_FK FOREIGN KEY(Proj_Number) REFERENCES Project (Proj_Number),
   CONSTRAINT assignment_empnum_FK FOREIGN KEY(Emp_Num) REFERENCES Employee (Emp_Num),
   CONSTRAINT assignment_endassign_CK check (Date_Assigned < Date_Ended),
   CONSTRAINT assignment_monthproj_CK unique (date_ended, proj_number)
