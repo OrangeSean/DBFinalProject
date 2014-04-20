@@ -5,7 +5,7 @@ SQL> select department.name Department, project.name Project,  max(assignment.da
   5  where project.start_date > to_date('1-JAN-2011','DD-MON-YYYY')
   6  group by department.name, project.name, project.START_DATE, total_cost
   7  having max(assignment.date_ended) < to_date('31-DEC-2014','DD-MON-YYYY')
-  8  order by department, total_cost;
+  8  order by department, total_cost desc;
 
 Sun Apr 20                                                                                                               page    1
                                                     Total Cost Per Department 
@@ -14,31 +14,31 @@ Sun Apr 20                                                                      
                                                                               Duration                                            
 DEPARTMENT                PROJECT                                             (In Days) TOTAL_COST  Employees Cost per Hour       
 ------------------------- -------------------------------------------------- ---------- ---------- ---------- ------------------  
-Accounting                Collateral Valuation - BDO                                781      53333          1     $1134.74        
-                          Proctor and Gable Enterprise Resouce Management           105     198570          2      $620.53        
+Accounting                Real Estate Appraisal for Hilton Hotels                   464     439174          1     $9344.13        
                           Pointwest Technologies Disaster Mangement System          105     327130          2     $1022.28        
-                          Real Estate Appraisal for Hilton Hotels                   464     439174          1     $9344.13        
+                          Proctor and Gable Enterprise Resouce Management           105     198570          2      $620.53        
+                          Collateral Valuation - BDO                                781      53333          1     $1134.74        
 *************************                                                               ----------                                
 Total Department Cost                                                                      1018207                                
                                                                                                                                   
-Human Resource            Ayala Technologies Effective Recruitment                  105     340603          2     $1064.38        
-                          Novare Staff Right Sizing                                 105     350786          2     $1096.21        
+Human Resource            Novare Staff Right Sizing                                 105     350786          2     $1096.21        
+                          Ayala Technologies Effective Recruitment                  105     340603          2     $1064.38        
 *************************                                                               ----------                                
 Total Department Cost                                                                       691389                                
                                                                                                                                   
-IT Support                Ratatouille Kiosk and Web Checkin                         257     313589          2     $1269.59        
-                          Champ Cargosystem Lux                                     105     313589          2      $979.97        
-                          Database Configuration - SSS                              761     327130          4      $642.69        
-                          Navitaire CMMI Audit                                      105     382475          2     $1195.23        
-                          Seven Seven Disaster  Risk Assessment                     105     429574          2     $1342.42        
+IT Support                Universal Robina Just In Time Inventory                    90     533122          2     $1666.01        
                           Big Pond CMMI Audit                                       105     442094          2     $1381.54        
-                          Universal Robina Just In Time Inventory                    90     533122          2     $1666.01        
+                          Seven Seven Disaster  Risk Assessment                     105     429574          2     $1342.42        
+                          Navitaire CMMI Audit                                      105     382475          2     $1195.23        
+                          Database Configuration - SSS                              761     327130          4      $642.69        
+                          Ratatouille Kiosk and Web Checkin                         257     313589          2     $1269.59        
+                          Champ Cargosystem Lux                                     105     313589          2      $979.97        
 *************************                                                               ----------                                
 Total Department Cost                                                                      2741573                                
                                                                                                                                   
-Operations                Work Flow Simulation of Soybean Factory                   660     198570          2      $863.35        
+Operations                Feasibility Study on Waste Management in Manila            45     439374          1     $2746.09        
                           Automatic Appraisal System                                284     340603          1     $1304.99        
-                          Feasibility Study on Waste Management in Manila            45     439374          1     $2746.09        
+                          Work Flow Simulation of Soybean Factory                   660     198570          2      $863.35        
 *************************                                                               ----------                                
 Total Department Cost                                                                       978547                                
                                                                                                                                   
