@@ -52,10 +52,10 @@ CREATE TABLE department
 );
 
 CREATE TABLE project
-( Proj_Number NUMBER(2),
-  Name VARCHAR2(80), 
+( Proj_Number NUMBER(3),
+  Name VARCHAR2(200), 
   Start_Date DATE DEFAULT SYSDATE,
-  Total_Cost NUMBER(10), 
+  Total_Cost NUMBER(30), 
   Dept_Code VARCHAR2(5), 
   Client_ID VARCHAR2(4),
   CONSTRAINT project_projnumber_PK PRIMARY KEY (Proj_Number),
