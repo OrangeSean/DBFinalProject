@@ -11,6 +11,25 @@ CONNECT BY PRIOR emp_num = super_ID;
 
 --No. 4
 alter table employee add bonus number(10);
+update employee x set x.bonus = 
+(
+select 200*count(proj_number) from assignment join project using (proj_number) 
+where START_DATE > to_date('1-JAN-2013','DD-MON-YYYY') and hours_used > 40 and emp_num = x.emp_num
+group by emp_num
+having count(proj_number) > 0
+);
+
+--No. 6
+select name, start_date, --date_assigned, date_ended, 
+case when total_cost is null  then 'On Going' else 'Completed' end as "On Going?"
+from
+(
+select name, start_date, date_assigned, date_ended, total_cost,
+lead(date_assigned, 1) over (PARTITION BY name order by name) - date_ended as discontinue
+from project join assignment using (proj_number)
+order by name
+)
+where discontinue > 0;
 
 --No. 8
 column id format 999
