@@ -1,5 +1,5 @@
-# output directory files
-output/
+# query output files
+spoolout.txt
 
 # output text
 .txt

@@ -1,33 +1,30 @@
----------------------------Part D Report
-column project format A50
-column department format A25
-column "Cost per Hour" format A18
-break on report on department skip 1
-compute sum label "Total Department Cost" of  total_cost on department
-column duration heading 'Duration | (In Days)'
-set feedback off linesize 130 pagesize 45
-TTITLE 'Total Cost Per Department | from January 1, 2011 to December 31, 2014'
-BTITLE CENTER 'End of Report' -
-       RIGHT 'Run By: ' SQL.USER FORMAT A7
-spool "C:\Users\ChibeePatag\git\DBFinalProject\partDResults.txt"
-select department.name Department, project.name Project,  max(assignment.date_ended)- project.start_date as duration, 
-total_cost, count(emp_num) "Employees", to_char(total_cost/sum(hours_used), '$9999999.99') "Cost per Hour"
-from department join project using (DEPT_CODE)
-join assignment using (proj_number)
-where project.start_date > to_date('1-JAN-2011','DD-MON-YYYY')     
-group by department.name, project.name, project.START_DATE, total_cost
-having max(assignment.date_ended) < to_date('31-DEC-2014','DD-MON-YYYY')
-order by department, total_cost desc;
-spool out;
-
-
-
-
-
-
-
-
-
-
-
-
+---------------------------PART D REPORT
+-- Format
+SET FEEDBACK OFF LINESIZE 160 PAGESIZE 30
+BREAK ON REPORT ON DEPARTMENT SKIP 1
+COLUMN PROJECT FORMAT A50
+COLUMN DEPARTMENT FORMAT A25
+COLUMN "TOTAL COST" FORMAT A15
+COLUMN "COST PER HOUR" FORMAT A15
+COLUMN DURATION HEADING 'DURATION | (IN HOURS)'
+COLUMN "HOURLY COST PER PERSON" HEADING 'HOURLY COST | PER PERSON'
+-- Header and footer
+TTITLE 'TOTAL COST PER DEPARTMENT | FROM JANUARY 1, 2011 TO DECEMBER 31, 2014'
+BTITLE CENTER 'END OF REPORT' - RIGHT 'RUN BY: ' SQL.USER FORMAT A7
+-- Compute Format
+COMPUTE SUM LABEL "TOTAL DEPARTMENT COST" OF  TOTAL_COST ON DEPARTMENT
+SPOOL "D:\DBM\FP\PARTDRESULTS.TXT"
+-- SQL query
+SELECT DEPARTMENT.NAME AS DEPARTMENT, PROJECT.NAME AS PROJECT,
+	SUM(HOURS_USED) AS DURATION,
+	TO_CHAR(TOTAL_COST, '$9999999.99') "TOTAL COST", COUNT(EMP_NUM) "EMPLOYEES#",
+	TO_CHAR(TOTAL_COST/SUM(HOURS_USED), '$9999999.99') "COST PER HOUR",
+	TO_CHAR(TOTAL_COST/SUM(HOURS_USED)/COUNT(EMP_NUM), '$9999999.99') "HOURLY COST PER PERSON"
+FROM DEPARTMENT JOIN PROJECT USING (DEPT_CODE)
+	JOIN ASSIGNMENT USING (PROJ_NUMBER)
+WHERE PROJECT.START_DATE > TO_DATE('1-JAN-2011','DD-MON-YYYY')     
+GROUP BY DEPARTMENT.NAME, PROJECT.NAME, PROJECT.START_DATE, TOTAL_COST
+HAVING MAX(ASSIGNMENT.DATE_ENDED) < TO_DATE('31-DEC-2014','DD-MON-YYYY')
+ORDER BY DEPARTMENT, TOTAL_COST DESC;
+-- End SQL query
+SPOOL OUT
