@@ -1,16 +1,18 @@
 --Sean's local (Change to point to your local, comment out mine below and run in sqlplus
 -- please don't delete mine below so we dont have to keep changing. Thanks!
-set echo on
-start D:\DBM\FP\Homer.sql;
-start D:\DBM\FP\skill.sql;
-start D:\DBM\FP\department.sql;
-start D:\DBM\FP\employee.sql;
-start D:\DBM\FP\department2.sql;
-start D:\DBM\FP\training.sql;
-start D:\DBM\FP\client.sql;
-start D:\DBM\FP\project.sql;
-start D:\DBM\FP\assignment.sql;
-spool out;
+SET ECHO ON
+SPOOL D:\DBM\FP\spoolout.txt
+START D:\DBM\FP\HOMER;
+START D:\DBM\FP\SKILL;
+START D:\DBM\FP\DEPARTMENT;
+START D:\DBM\FP\EMPLOYEE;
+START D:\DBM\FP\DEPARTMENT2;
+START D:\DBM\FP\TRAINING;
+START D:\DBM\FP\CLIENT;
+START D:\DBM\FP\PROJECT;
+START D:\DBM\FP\ASSIGNMENT;
+SPOOL OUT
+
 
 --Celine's Local
 set echo on
