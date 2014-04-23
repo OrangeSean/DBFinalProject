@@ -1,0 +1,69 @@
+SQL> TTITLE 'Employee Information'
+SQL> set pagesize 100
+SQL> set linesize 150
+SQL> column employee format A18
+SQL> column supervisor format A16
+SQL> column Skill word_wrapped format A40
+SQL> column Training word_wrapped format A40
+SQL> column Date_Acquired heading 'Date|Acquired' format A15
+SQL> column months heading 'Months|Since|Training' format 999
+SQL> break on report on employee skip 1
+SQL> compute count label 'Number of Trainings' of training on employee
+SQL> select e.emp_first || ' ' || e.emp_last as employee,
+  2         s.emp_first || ' ' || s.emp_last as supervisor,
+  3         t.name training, t.DATE_ACQUIRED, sk.description as Skill,
+  4         months_between(sysdate, t.date_acquired) months
+  5  from employee e inner join employee s on e.super_id = s.emp_num
+  6                  inner join training t on e.EMP_NUM = t.EMP_NUM
+  7                  inner join skill sk   on t.code = sk.code
+  8  order by e.emp_last;
+
+Wed Apr 23                                                                                                                                   page    1
+                                                                 Employee Information
+
+                                                                                                                                        Months        
+                                                                             Date                                                        Since        
+EMPLOYEE           SUPERVISOR       TRAINING                                 Acquired        SKILL                                    Training        
+------------------ ---------------- ---------------------------------------- --------------- ---------------------------------------- --------        
+Jolie Acevedo      Benedict Boyle   Struts                                   07-MAY-11       Java Enterprise Edition - servlets, jsp,       36        
+                                                                                             servers                                                  
+                                                                                                                                                      
+                   Benedict Boyle   Mainframe and assembly                   12-NOV-11       Basic queries using oracle SQL                 29        
+******************                  ----------------------------------------                                                                          
+Number of Training                  2                                                                                                                 
+                                                                                                                                                      
+Nicole Browning    Benedict Boyle   IOS Mobile Development                   14-JUL-13       Android mobile development                      9        
+                   Benedict Boyle   IOS Mobile Development                   14-JUN-13       Android mobile development                     10        
+                   Benedict Boyle   Black box testing and use cases          09-MAY-12       Java Enterprise Edition - servlets, jsp,       23        
+                                                                                             servers                                                  
+                                                                                                                                                      
+                   Benedict Boyle   IOS Mobile Development                   14-MAY-13       Android mobile development                     11        
+******************                  ----------------------------------------                                                                          
+Number of Training                  4                                                                                                                 
+                                                                                                                                                      
+Noah Faulkner      Benedict Boyle   Wicket, Thymeleaf                        13-DEC-11       Android mobile development                     28        
+                   Benedict Boyle   Unit testing and regression testing      08-DEC-11       Basic programming with Java                    29        
+******************                  ----------------------------------------                                                                          
+Number of Training                  2                                                                                                                 
+                                                                                                                                                      
+Wynter Holloway    Benedict Boyle   Spring IOC, MVC                          05-SEP-13       Basic programming with Java                     8        
+                   Benedict Boyle   Spring IOC, MVC                          05-MAY-13       Basic programming with Java                    12        
+                   Benedict Boyle   Spring IOC, MVC                          05-AUG-13       Basic programming with Java                     9        
+                   Benedict Boyle   Struts vs Spring                         10-MAY-13       Java Enterprise Edition - servlets, jsp,       11        
+                                                                                             servers                                                  
+                                                                                                                                                      
+                   Benedict Boyle   Spring IOC, MVC                          05-JUN-13       Basic programming with Java                    11        
+******************                  ----------------------------------------                                                                          
+Number of Training                  5                                                                                                                 
+                                                                                                                                                      
+Margaret Swanson   Benedict Boyle   PPM for PMI Certification                06-MAY-12       Project management 1 for PMI                   24        
+                                                                                             certification                                            
+                                                                                                                                                      
+                   Benedict Boyle   Mobile development                       11-MAY-13       Basic queries using oracle SQL                 11        
+******************                  ----------------------------------------                                                                          
+Number of Training                  2                                                                                                                 
+                                                                                                                                                      
+
+15 rows selected.
+
+SQL> spool out;
