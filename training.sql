@@ -18,4 +18,16 @@ Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values
 Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (13,'JAVA1',12,to_date('05-JUN-13','DD-MON-RR'),'Spring IOC, MVC','Second take');
 Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (14,'JAVA1',12,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
 Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (15,'JAVA1',12,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
+
+-- partB-9 insert
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (16,'SQL2',23,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (17,'SQL2',24,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (18,'PRJM1',16,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (19,'PRJM2',17,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (20,'JAVA1',18,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (21,'RUBY',7,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (22,'PYTHO',8,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
+Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (23,'PYTHO',1,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
+
+
 commit;
