@@ -119,8 +119,9 @@ SQL> SELECT DECODE(NAME, NULL, 'IN TOTAL', NAME) AS "ONGOING PROJECT NAME", STAR
 ONGOING PROJECT NAME                               START_DATE   MONTH      #EMPLOYEES TOTAL HOURS                                                                                   
 -------------------------------------------------- ------------ ---------- ---------- -----------                                                                                   
 Employee satisfication survey                      21-DEC-13    APR-2014            1         550                                                                                   
-                                                                DEC-2013            2        1050                                                                                   
+                                                                DEC-2013            1         500                                                                                   
                                                                 FEB-2014            1         300                                                                                   
+                                                                JAN-2013            1         550                                                                                   
                                                                 JAN-2014            3        1020                                                                                   
                                                                 MAR-2014            1         500                                                                                   
 Option pricer calculator algorithm design          08-MAR-14    APR-2014            1         300                                                                                   
@@ -129,16 +130,13 @@ AtCMUA Android mobile application development      01-JAN-14    FEB-2014        
                                                                 JAN-2014            1         300                                                                                   
 IN TOTAL                                                                           12        4740                                                                                   
 
-10 rows selected.
+11 rows selected.
 
 SQL> CLEAR BREAK
 SQL> start D:\DBM\FP\partB\partB-4
 SQL> alter table employee add bonus number(10);
-alter table employee add bonus number(10)
-                         *
-ERROR at line 1:
-ORA-01430: column being added already exists in table 
 
+Table altered.
 
 SQL> update employee x set x.bonus =
   2  (
@@ -185,7 +183,7 @@ SQL> CLEAR BREAK COLUMN
 SQL> start D:\DBM\FP\partB\partB-6
 SQL> clear column
 SQL> column name format A50
-SQL> select name, start_date, decode(iscontinue, 0, 'completed', null, 'N/A', 'on-going') as "status"
+SQL> select proj_number, name, start_date, decode(total_cost, null, 'on-going', 'complete') as "status"
   2  from project left outer join (
   3  	     select P, sum(R) as iscontinue
   4  	     from (
@@ -199,43 +197,32 @@ SQL> select name, start_date, decode(iscontinue, 0, 'completed', null, 'N/A', 'o
  12  			     from (
  13  				     select proj_number as P, assign_num as A, date_assigned as S, decode(date_ended, null, sysdate, date_ended) as E,
  14  					     min(date_assigned) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as mins,
- 15  					     max(date_ended) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as maxe
+ 15  					     max(decode(date_ended, null, sysdate, date_ended)) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as maxe
  16  				     from assignment
  17  				     order by proj_number, date_assigned
  18  			     )
  19  		     )
  20  	     )
  21  	     group by P
- 22  ) on (proj_number = P);
+ 22  ) on (proj_number = P)
+ 23  where iscontinue != 0
+ 24  order by proj_number;
 
-NAME                                               START_DATE   status                                                                                                              
--------------------------------------------------- ------------ ------------------                                                                                                  
-Universal Robina Just In Time Inventory            17-NOV-13    on-going                                                                                                            
-Employee satisfication survey                      21-DEC-13    completed                                                                                                           
-Collateral Valuation - BDO                         24-JAN-12    completed                                                                                                           
-Internship and Junior Recruitment                  14-JUL-12    completed                                                                                                           
-Ayala Technologies Effective Recruitment           25-NOV-13    on-going                                                                                                            
-Employee satisfication survey                      21-DEC-13    completed                                                                                                           
-Automatic Appraisal System                         28-NOV-13    completed                                                                                                           
-Novare Staff Right Sizing                          19-NOV-13    on-going                                                                                                            
-Database Configuration - SSS                       29-NOV-12    completed                                                                                                           
-AtCMUA Android mobile application development      01-JAN-14    completed                                                                                                           
-Loratadine Maximus                                 03-MAR-14    completed                                                                                                           
-Ratatouille Kiosk and Web Checkin                  07-JAN-13    completed                                                                                                           
-Proctor and Gable Enterprise Resouce Management    18-NOV-13    on-going                                                                                                            
-Navitaire CMMI Audit                               24-NOV-13    on-going                                                                                                            
-Work Flow Simulation of Soybean Factory            01-MAR-13    completed                                                                                                           
-Champ Cargosystem Lux                              21-NOV-13    on-going                                                                                                            
-Seven Seven Disaster  Risk Assessment              22-NOV-13    on-going                                                                                                            
-Feasibility Study on Waste Management in Manila    16-NOV-13    completed                                                                                                           
-Anderson Workbench Tool                            01-JUL-13    completed                                                                                                           
-Real Estate Appraisal for Hilton Hotels            06-DEC-12    completed                                                                                                           
-Process Efficiency Evaluation for Wearhouse Shirts 22-JUN-13    on-going                                                                                                            
-Pointwest Technologies Disaster Mangement System   20-NOV-13    on-going                                                                                                            
-Big Pond CMMI Audit                                23-NOV-13    on-going                                                                                                            
-Option pricer calculator algorithm design          08-MAR-14    completed                                                                                                           
+PROJ_NUMBER NAME                                               START_DATE   status                                                                                                  
+----------- -------------------------------------------------- ------------ ----------------                                                                                        
+         67 Process Efficiency Evaluation for Wearhouse Shirts 22-JUN-13    complete                                                                                                
+        100 Universal Robina Just In Time Inventory            17-NOV-13    complete                                                                                                
+        101 Proctor and Gable Enterprise Resouce Management    18-NOV-13    complete                                                                                                
+        102 Novare Staff Right Sizing                          19-NOV-13    complete                                                                                                
+        103 Pointwest Technologies Disaster Mangement System   20-NOV-13    complete                                                                                                
+        104 Champ Cargosystem Lux                              21-NOV-13    complete                                                                                                
+        105 Seven Seven Disaster  Risk Assessment              22-NOV-13    complete                                                                                                
+        106 Big Pond CMMI Audit                                23-NOV-13    complete                                                                                                
+        107 Navitaire CMMI Audit                               24-NOV-13    complete                                                                                                
+        108 Ayala Technologies Effective Recruitment           25-NOV-13    complete                                                                                                
+        110 AtCMUA Android mobile application development      01-JAN-14    on-going                                                                                                
 
-24 rows selected.
+11 rows selected.
 
 SQL> start D:\DBM\FP\partB\partB-7
 SQL> CLEAR COLUMN

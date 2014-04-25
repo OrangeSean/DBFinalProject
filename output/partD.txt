@@ -44,8 +44,7 @@ Accounting                Option pricer calculator algorithm design             
 *************************                                                                ----------                                                             
 TOTAL DEPARTMENT COST                                                                      $1018207                                                             
                                                                                                                                                                 
-Human Resource            Employee satisfication survey                             3420                     8                                                  
-                          Novare Staff Right Sizing                                  320    $350786          2     $1096.21         $548.10                     
+Human Resource            Novare Staff Right Sizing                                  320    $350786          2     $1096.21         $548.10                     
                           Ayala Technologies Effective Recruitment                   320    $340603          2     $1064.38         $532.19                     
 *************************                                                                ----------                                                             
 TOTAL DEPARTMENT COST                                                                       $691389                                                             
@@ -67,6 +66,7 @@ Operations                Feasibility Study on Waste Management in Manila       
 *************************                                                                ----------                                                             
 TOTAL DEPARTMENT COST                                                                       $978547                                                             
                                                                                                                                                                 
+
                                                                          END OF REPORT-                                                               RUN BY: FP
 SQL> -- End SQL query
 SQL> TTITLE OFF
