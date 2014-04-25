@@ -1,0 +1,75 @@
+SQL> start D:\DBM\FP\partD\partD
+SQL> ---------------------------PART D REPORT
+SQL> -- Format
+SQL> SET FEEDBACK OFF LINESIZE 160 PAGESIZE 40
+SQL> BREAK ON REPORT ON DEPARTMENT SKIP 1
+SQL> COLUMN PROJECT FORMAT A50
+SQL> COLUMN DEPARTMENT FORMAT A25
+SQL> COLUMN "TOTAL COST" FORMAT $99999999
+SQL> COLUMN "COST PER HOUR" FORMAT A15
+SQL> COLUMN DURATION HEADING 'DURATION | (IN HOURS)'
+SQL> COLUMN "HOURLY COST PER PERSON" HEADING 'HOURLY COST | PER PERSON'
+SQL> -- Compute Format
+SQL> COMPUTE SUM LABEL "TOTAL DEPARTMENT COST" OF  "TOTAL COST" ON DEPARTMENT
+SQL> -- Header and footer
+SQL> TTITLE 'TOTAL COST PER DEPARTMENT | FROM JANUARY 1, 2011 TO DECEMBER 31, 2014'
+SQL> BTITLE CENTER 'END OF REPORT' - RIGHT 'RUN BY: ' SQL.USER FORMAT A7
+SQL> -- Compute Format
+SQL> COMPUTE SUM LABEL "TOTAL DEPARTMENT COST" OF  "TOTAL COST" ON DEPARTMENT
+SQL> -- SQL query
+SQL> SELECT DEPARTMENT.NAME AS DEPARTMENT, PROJECT.NAME AS PROJECT,
+  2  	     SUM(HOURS_USED) AS DURATION,
+  3  	     TOTAL_COST "TOTAL COST", COUNT(EMP_NUM) "EMPLOYEES#",
+  4  	     TO_CHAR(TOTAL_COST/SUM(HOURS_USED), '$9999999.99') "COST PER HOUR",
+  5  	     TO_CHAR(TOTAL_COST/SUM(HOURS_USED)/COUNT(EMP_NUM), '$9999999.99') "HOURLY COST PER PERSON"
+  6  FROM DEPARTMENT JOIN PROJECT USING (DEPT_CODE)
+  7  	     JOIN ASSIGNMENT USING (PROJ_NUMBER)
+  8  WHERE PROJECT.START_DATE > TO_DATE('1-JAN-2011','DD-MON-YYYY')
+  9  GROUP BY DEPARTMENT.NAME, PROJECT.NAME, PROJECT.START_DATE, TOTAL_COST
+ 10  HAVING MAX(ASSIGNMENT.DATE_ENDED) < TO_DATE('31-DEC-2014','DD-MON-YYYY')
+ 11  ORDER BY DEPARTMENT, TOTAL_COST DESC;
+
+Fri Apr 25                                                                                                                                             page    1
+                                                                   TOTAL COST PER DEPARTMENT 
+                                                            FROM JANUARY 1, 2011 TO DECEMBER 31, 2014
+
+                                                                               DURATION                                        HOURLY COST                      
+DEPARTMENT                PROJECT                                             (IN HOURS) TOTAL COST EMPLOYEES# COST PER HOUR    PER PERSON                      
+------------------------- -------------------------------------------------- ----------- ---------- ---------- --------------- ------------------------         
+Accounting                Option pricer calculator algorithm design                  700                     2                                                  
+                          Real Estate Appraisal for Hilton Hotels                     47    $439174          1     $9344.13        $9344.13                     
+                          Pointwest Technologies Disaster Mangement System           320    $327130          2     $1022.28         $511.14                     
+                          Proctor and Gable Enterprise Resouce Management            320    $198570          2      $620.53         $310.27                     
+                          Collateral Valuation - BDO                                  47     $53333          1     $1134.74        $1134.74                     
+*************************                                                                ----------                                                             
+TOTAL DEPARTMENT COST                                                                      $1018207                                                             
+                                                                                                                                                                
+Human Resource            Employee satisfication survey                             3420                     8                                                  
+                          Novare Staff Right Sizing                                  320    $350786          2     $1096.21         $548.10                     
+                          Ayala Technologies Effective Recruitment                   320    $340603          2     $1064.38         $532.19                     
+*************************                                                                ----------                                                             
+TOTAL DEPARTMENT COST                                                                       $691389                                                             
+                                                                                                                                                                
+IT Support                AtCMUA Android mobile application development              620                     2                                                  
+                          Universal Robina Just In Time Inventory                    320    $533122          2     $1666.01         $833.00                     
+                          Big Pond CMMI Audit                                        320    $442094          2     $1381.54         $690.77                     
+                          Seven Seven Disaster  Risk Assessment                      320    $429574          2     $1342.42         $671.21                     
+                          Navitaire CMMI Audit                                       320    $382475          2     $1195.23         $597.62                     
+                          Database Configuration - SSS                               509    $327130          4      $642.69         $160.67                     
+                          Ratatouille Kiosk and Web Checkin                          247    $313589          2     $1269.59         $634.80                     
+                          Champ Cargosystem Lux                                      320    $313589          2      $979.97         $489.98                     
+*************************                                                                ----------                                                             
+TOTAL DEPARTMENT COST                                                                      $2741573                                                             
+                                                                                                                                                                
+Operations                Feasibility Study on Waste Management in Manila            160    $439374          1     $2746.09        $2746.09                     
+                          Automatic Appraisal System                                 261    $340603          1     $1304.99        $1304.99                     
+                          Work Flow Simulation of Soybean Factory                    230    $198570          2      $863.35         $431.67                     
+*************************                                                                ----------                                                             
+TOTAL DEPARTMENT COST                                                                       $978547                                                             
+                                                                                                                                                                
+                                                                         END OF REPORT-                                                               RUN BY: FP
+SQL> -- End SQL query
+SQL> TTITLE OFF
+SQL> BTITLE OFF
+SQL> CLEAR BREAK COLUMN COMPUTE
+SQL> spool out

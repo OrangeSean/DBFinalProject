@@ -1,0 +1,188 @@
+SQL> start D:\DBM\FP\partC\partC-1
+SQL> TTITLE 'Employee Information'
+SQL> set pagesize 100 linesize 150
+SQL> column employee format A18
+SQL> column supervisor format A16
+SQL> column Skill word_wrapped format A40
+SQL> column Training word_wrapped format A40
+SQL> column Date_Acquired heading 'Date|Acquired' format A15
+SQL> column months heading 'Months|Since|Training' format 999
+SQL> break on report on employee skip 1
+SQL> compute count label 'Number of Trainings' of training on employee
+SQL> select e.emp_first || ' ' || e.emp_last as employee,
+  2  	    s.emp_first || ' ' || s.emp_last as supervisor,
+  3  	    t.name training, t.DATE_ACQUIRED, sk.description as Skill,
+  4  	    months_between(sysdate, t.date_acquired) months
+  5  from employee e inner join employee s on e.super_id = s.emp_num
+  6  		     inner join training t on e.EMP_NUM = t.EMP_NUM
+  7  		     inner join skill sk   on t.code = sk.code
+  8  order by e.emp_last;
+
+Fri Apr 25                                                                                                                                   page    1
+                                                                 Employee Information
+
+                                                                                                                                        Months        
+                                                                             Date                                                        Since        
+EMPLOYEE           SUPERVISOR       TRAINING                                 Acquired        SKILL                                    Training        
+------------------ ---------------- ---------------------------------------- --------------- ---------------------------------------- --------        
+Jolie Acevedo      Benedict Boyle   Struts                                   07-MAY-11       Java Enterprise Edition - servlets,            36        
+                                                                                             jsp, servers                                             
+                                                                                                                                                      
+                   Benedict Boyle   Mainframe and assembly                   12-NOV-11       Basic queries using oracle SQL                 29        
+******************                  ----------------------------------------                                                                          
+Number of Training                  2                                                                                                                 
+                                                                                                                                                      
+Nicole Browning    Benedict Boyle   IOS Mobile Development                   14-MAY-13       Android mobile development                     11        
+                   Benedict Boyle   Black box testing and use cases          09-MAY-12       Java Enterprise Edition - servlets,            24        
+                                                                                             jsp, servers                                             
+                                                                                                                                                      
+                   Benedict Boyle   IOS Mobile Development                   14-JUN-13       Android mobile development                     10        
+                   Benedict Boyle   Spring IOC, MVC                          05-AUG-13       Project management 1 for PMI                    9        
+                                                                                             certification                                            
+                                                                                                                                                      
+                   Benedict Boyle   IOS Mobile Development                   14-JUL-13       Android mobile development                      9        
+******************                  ----------------------------------------                                                                          
+Number of Training                  5                                                                                                                 
+                                                                                                                                                      
+Noah Faulkner      Benedict Boyle   Unit testing and regression testing      08-DEC-11       Basic programming with Java                    29        
+                   Benedict Boyle   Wicket, Thymeleaf                        13-DEC-11       Android mobile development                     28        
+******************                  ----------------------------------------                                                                          
+Number of Training                  2                                                                                                                 
+                                                                                                                                                      
+Wynter Holloway    Benedict Boyle   Struts vs Spring                         10-MAY-13       Java Enterprise Edition - servlets,            12        
+                                                                                             jsp, servers                                             
+                                                                                                                                                      
+                   Benedict Boyle   Spring IOC, MVC                          05-JUN-13       Basic programming with Java                    11        
+                   Benedict Boyle   Spring IOC, MVC                          05-SEP-13       Basic programming with Java                     8        
+                   Benedict Boyle   Spring IOC, MVC                          05-AUG-13       Basic programming with Java                     9        
+                   Benedict Boyle   Spring IOC, MVC                          05-MAY-13       Basic programming with Java                    12        
+******************                  ----------------------------------------                                                                          
+Number of Training                  5                                                                                                                 
+                                                                                                                                                      
+Baker Montgomery   Eugenia Mcgee    Spring IOC, MVC                          05-AUG-13       Basic programming with Java                     9        
+******************                  ----------------------------------------                                                                          
+Number of Training                  1                                                                                                                 
+                                                                                                                                                      
+Sasha Morrow       Eugenia Mcgee    Spring IOC, MVC                          05-SEP-13       IT Project mangement for PMI                    8        
+                                                                                             certification                                            
+                                                                                                                                                      
+******************                  ----------------------------------------                                                                          
+Number of Training                  1                                                                                                                 
+                                                                                                                                                      
+Lane Nguyen        Brendan Alford   Spring IOC, MVC                          05-SEP-13       Advance qureies using oracle SQL                8        
+******************                  ----------------------------------------                                                                          
+Number of Training                  1                                                                                                                 
+                                                                                                                                                      
+Amery Noel         Brendan Alford   Spring IOC, MVC                          05-AUG-13       Advance qureies using oracle SQL                9        
+******************                  ----------------------------------------                                                                          
+Number of Training                  1                                                                                                                 
+                                                                                                                                                      
+Fuller Sharp       Kasimir Bean     Spring IOC, MVC                          05-SEP-13       Web development with Ruby on rails              8        
+******************                  ----------------------------------------                                                                          
+Number of Training                  1                                                                                                                 
+                                                                                                                                                      
+Maisie Simon       Kasimir Bean     Spring IOC, MVC                          05-SEP-13       Web development with Python                     8        
+******************                  ----------------------------------------                                                                          
+Number of Training                  1                                                                                                                 
+                                                                                                                                                      
+Margaret Swanson   Benedict Boyle   PPM for PMI Certification                06-MAY-12       Project management 1 for PMI                   24        
+                                                                                             certification                                            
+                                                                                                                                                      
+                   Benedict Boyle   Mobile development                       11-MAY-13       Basic queries using oracle SQL                 11        
+******************                  ----------------------------------------                                                                          
+Number of Training                  2                                                                                                                 
+                                                                                                                                                      
+
+22 rows selected.
+
+SQL> set linesize 180 pagesize 200
+SQL> start D:\DBM\FP\partC\partC-2
+SQL> set linesize 140 pagesize 60
+SQL> clear column
+SQL> break on "table_name" on "column_name"
+SQL> column "table_name" format A15
+SQL> column "column_name" format A15
+SQL> column "constraint_name" format A30
+SQL> column "search_condition" format A35
+SQL> column "reference" format A25
+SQL> ttitle 'CONSTRAINTS INFORMATION'
+SQL> btitle center 'END OF REPORT'
+SQL> select T1.table_name "table_name", T2.column_name "column_name",
+  2  	     T1.constraint_name "constraint_name",
+  3  	     decode(T1.constraint_type, 'P', 'PK', 'R', 'FK', 'U', 'UK', 'C', 'CK') "type",
+  4  	     T1.search_condition "search_condition",
+  5  	     decode(T3.table_name, null, null, T3.table_name || ': ' || T3.column_name) "reference"
+  6  from user_constraints T1 left outer join user_cons_columns T2 on (T1.constraint_name = T2.constraint_name)
+  7  	     left outer join (
+  8  	     select user_constraints.table_name, column_name, constraint_name
+  9  	     from user_constraints left outer join user_cons_columns using (constraint_name)
+ 10  	     ) T3
+ 11  	     on (T1.r_constraint_name = T3.constraint_name)
+ 12  	     left outer join user_tab_columns T4 on (T4.column_name = T2.column_name)
+ 13  order by T1.table_name, column_id;
+
+Fri Apr 25                                                                                                                         page    1
+                                                          CONSTRAINTS INFORMATION
+
+table_name      column_name     constraint_name                type search_condition                    reference                           
+--------------- --------------- ------------------------------ ---- ----------------------------------- -------------------------           
+ASSIGNMENT      PROJ_NUMBER     ASSIGNMENT_PROJECTNUMBER_FK    FK                                       PROJECT: PROJ_NUMBER                
+                                ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
+                ASSIGN_NUM      ASSIGNMENT_ASSIGNNUM_PK        PK                                                                           
+                EMP_NUM         ASSIGNMENT_EMPNUM_FK           FK                                       EMPLOYEE: EMP_NUM                   
+                PROJ_NUMBER     ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
+                                ASSIGNMENT_PROJECTNUMBER_FK    FK                                       PROJECT: PROJ_NUMBER                
+                EMP_NUM         ASSIGNMENT_EMPNUM_FK           FK                                       EMPLOYEE: EMP_NUM                   
+                                ASSIGNMENT_EMPNUM_FK           FK                                       EMPLOYEE: EMP_NUM                   
+                DATE_ASSIGNED   ASSIGNMENT_ENDASSIGN_CK        CK   Date_Assigned < Date_Ended                                              
+                DATE_ENDED      ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
+                                ASSIGNMENT_ENDASSIGN_CK        CK   Date_Assigned < Date_Ended                                              
+CLIENT          CLIENT_ID       CLIENT_CLIENTID_PK             PK                                                                           
+                                CLIENT_CLIENTID_PK             PK                                                                           
+DEPARTMENT      DEPT_CODE       DEPARTMENT_DEPTCODE_PK         PK                                                                           
+                MANAGER_ID      DEPARTMENT_MANAGERID_FK        FK                                       EMPLOYEE: EMP_NUM                   
+                DEPT_CODE       DEPARTMENT_DEPTCODE_PK         PK                                                                           
+                                DEPARTMENT_DEPTCODE_PK         PK                                                                           
+EMPLOYEE        DEPT_CODE       EMPLOYEE_DEPTCODE_FK           FK                                       DEPARTMENT: DEPT_CODE               
+                EMP_NUM         EMPLOYEE_EMPNUM_PK             PK                                                                           
+                                EMPLOYEE_SUPERVISE_CK          CK   super_id != emp_num                                                     
+                                EMPLOYEE_SUPERVISE_CK          CK   super_id != emp_num                                                     
+                                EMPLOYEE_SUPERVISE_CK          CK   super_id != emp_num                                                     
+                                EMPLOYEE_EMPNUM_PK             PK                                                                           
+                                EMPLOYEE_EMPNUM_PK             PK                                                                           
+                HIRE_DATE       EMPLOYEE_AGE_CK                CK   ((hire_date - DOB)/365) > 17                                            
+                DEPT_CODE       EMPLOYEE_DEPTCODE_FK           FK                                       DEPARTMENT: DEPT_CODE               
+                DOB             EMPLOYEE_AGE_CK                CK   ((hire_date - DOB)/365) > 17                                            
+                SUPER_ID        EMPLOYEE_SUPERID_FK            FK                                       EMPLOYEE: EMP_NUM                   
+                                EMPLOYEE_SUPERVISE_CK          CK   super_id != emp_num                                                     
+                DEPT_CODE       EMPLOYEE_DEPTCODE_FK           FK                                       DEPARTMENT: DEPT_CODE               
+PROJECT         DEPT_CODE       PROJECT_DEPT_ADMIN_CK          CK   Dept_Code != 'ADMIN'                                                    
+                                PROJECT_DEPTCODE_FK            FK                                       DEPARTMENT: DEPT_CODE               
+                CLIENT_ID       PROJECT_CLIENTID_FK            FK                                       CLIENT: CLIENT_ID                   
+                PROJ_NUMBER     PROJECT_PROJNUMBER_PK          PK                                                                           
+                                PROJECT_PROJNUMBER_PK          PK                                                                           
+                DEPT_CODE       PROJECT_DEPT_ADMIN_CK          CK   Dept_Code != 'ADMIN'                                                    
+                                PROJECT_DEPTCODE_FK            FK                                       DEPARTMENT: DEPT_CODE               
+                CLIENT_ID       PROJECT_CLIENTID_FK            FK                                       CLIENT: CLIENT_ID                   
+                DEPT_CODE       PROJECT_DEPTCODE_FK            FK                                       DEPARTMENT: DEPT_CODE               
+                                PROJECT_DEPT_ADMIN_CK          CK   Dept_Code != 'ADMIN'                                                    
+SKILL           CODE            SKILL_CODE_PK                  PK                                                                           
+                                SKILL_CODE_PK                  PK                                                                           
+TRAINING        EMP_NUM         TRAINING_EMPNUM_FK             FK                                       EMPLOYEE: EMP_NUM                   
+                CODE            TRAINING_CODE_FK               FK                                       SKILL: CODE                         
+                TRAIN_NUM       TRAINING_TRAINNUM_PK           PK                                                                           
+                CODE            TRAINING_CODE_FK               FK                                       SKILL: CODE                         
+                EMP_NUM         TRAINING_EMPNUM_FK             FK                                       EMPLOYEE: EMP_NUM                   
+                                TRAINING_EMPNUM_FK             FK                                       EMPLOYEE: EMP_NUM                   
+
+
+
+
+
+                                                                END OF REPORT                                                               
+
+48 rows selected.
+
+SQL> clear column break
+SQL> set linesize 180 pagesize 200
+SQL> spool out

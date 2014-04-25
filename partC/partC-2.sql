@@ -1,4 +1,3 @@
-spool d:\dbm\fp\spoolout.txt
 set linesize 140 pagesize 60
 clear column
 break on "table_name" on "column_name"
@@ -24,4 +23,3 @@ from user_constraints T1 left outer join user_cons_columns T2 on (T1.constraint_
 order by T1.table_name, column_id;
 clear column break
 set linesize 180 pagesize 200
-spool out

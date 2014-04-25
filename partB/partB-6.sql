@@ -1,6 +1,6 @@
 clear column
 column name format A50
-select name, start_date, decode(iscontinue, 0, 'completed', null, 'N/A', 'on-going') as "status"
+select proj_number, name, start_date, decode(total_cost, null, 'on-going', 'complete') as "status"
 from project left outer join (
 	select P, sum(R) as iscontinue
 	from (
@@ -14,11 +14,13 @@ from project left outer join (
 			from (
 				select proj_number as P, assign_num as A, date_assigned as S, decode(date_ended, null, sysdate, date_ended) as E,
 					min(date_assigned) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as mins,
-					max(date_ended) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as maxe
+					max(decode(date_ended, null, sysdate, date_ended)) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as maxe
 				from assignment
 				order by proj_number, date_assigned
 			)
 		)
 	)
 	group by P
-) on (proj_number = P);
+) on (proj_number = P)
+where iscontinue != 0
+order by proj_number;
