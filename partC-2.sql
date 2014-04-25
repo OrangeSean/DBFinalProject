@@ -1,5 +1,5 @@
 spool d:\dbm\fp\spoolout.txt
-set linesize 140 pagesize 35
+set linesize 140 pagesize 60
 clear column
 break on "table_name" on "column_name"
 column "table_name" format A15
@@ -19,7 +19,9 @@ from user_constraints T1 left outer join user_cons_columns T2 on (T1.constraint_
 	select user_constraints.table_name, column_name, constraint_name
 	from user_constraints left outer join user_cons_columns using (constraint_name)
 	) T3
-	on (T1.r_constraint_name = T3.constraint_name);
+	on (T1.r_constraint_name = T3.constraint_name)
+	left outer join user_tab_columns T4 on (T4.column_name = T2.column_name)
+order by T1.table_name, column_id;
 clear column break
 set linesize 180 pagesize 200
 spool out
