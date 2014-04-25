@@ -1,0 +1,94 @@
+SQL> set linesize 140 pagesize 60
+SQL> clear column
+columns cleared
+SQL> break on "table_name" on "column_name"
+SQL> column "table_name" format A15
+SQL> column "column_name" format A15
+SQL> column "constraint_name" format A30
+SQL> column "search_condition" format A35
+SQL> column "reference" format A25
+SQL> ttitle 'CONSTRAINTS INFORMATION'
+SQL> btitle center 'END OF REPORT'
+SQL> 
+SQL> select utc.table_name,  utc.column_name,
+  2    t5.constraint_name, t5.CONS_type, t5.search_condition, t5.reference
+  3    from user_tab_columns utc
+  4    left join (select T1.table_name table_name, T2.column_name column_name,
+  5  	T1.constraint_name constraint_name,
+  6  	decode(T1.constraint_type, 'P', 'PK', 'R', 'FK', 'U', 'UK', 'C', 'CK') CONS_type,
+  7  	T1.search_condition search_condition,
+  8  	decode(T3.table_name, null, null, T3.table_name || ': ' || T3.column_name) reference
+  9    from user_constraints T1 left outer join user_cons_columns T2 on (T1.constraint_name = T2.constraint_name)
+ 10  	left outer join (
+ 11  	select user_constraints.table_name, column_name, constraint_name
+ 12  	from user_constraints left outer join user_cons_columns using (constraint_name)
+ 13  	) T3
+ 14  	on (T1.r_constraint_name = T3.constraint_name)) t5
+ 15    on (utc.table_name = t5.table_name and utc.column_name = t5.column_name)
+ 16    order by table_name, column_id
+ 17    ;
+
+Fri Apr 25                                                                                                                         page    1
+                                                          CONSTRAINTS INFORMATION
+
+TABLE_NAME      COLUMN_NAME     CONSTRAINT_NAME                CO SEARCH_CONDITION                    REFERENCE                             
+--------------- --------------- ------------------------------ -- ----------------------------------- -------------------------             
+ASSIGNMENT      ASSIGN_NUM      ASSIGNMENT_ASSIGNNUM_PK        PK                                                                           
+                PROJ_NUMBER     ASSIGNMENT_PROJECTNUMBER_FK    FK                                     PROJECT: PROJ_NUMBER                  
+                                ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
+                EMP_NUM         ASSIGNMENT_EMPNUM_FK           FK                                     EMPLOYEE: EMP_NUM                     
+                DATE_ASSIGNED   ASSIGNMENT_ENDASSIGN_CK        CK Date_Assigned < Date_Ended                                                
+                DATE_ENDED      ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
+                                ASSIGNMENT_ENDASSIGN_CK        CK Date_Assigned < Date_Ended                                                
+                HOURS_USED                                                                                                                  
+CLIENT          CLIENT_ID       CLIENT_CLIENTID_PK             PK                                                                           
+                NAME                                                                                                                        
+                STREET                                                                                                                      
+                CITY                                                                                                                        
+                STATE                                                                                                                       
+                ZIP_CODE                                                                                                                    
+                INDUSTRY                                                                                                                    
+                WEB_ADDRESS                                                                                                                 
+                PHONE                                                                                                                       
+                CONTACT_NAME                                                                                                                
+DEPARTMENT      DEPT_CODE       DEPARTMENT_DEPTCODE_PK         PK                                                                           
+                NAME                                                                                                                        
+                LOCATION                                                                                                                    
+                PHONE                                                                                                                       
+                MANAGER_ID      DEPARTMENT_MANAGERID_FK        FK                                     EMPLOYEE: EMP_NUM                     
+EMPLOYEE        EMP_NUM         EMPLOYEE_EMPNUM_PK             PK                                                                           
+                                EMPLOYEE_SUPERVISE_CK          CK super_id != emp_num                                                       
+                EMP_LAST                                                                                                                    
+                EMP_FIRST                                                                                                                   
+                HIRE_DATE       EMPLOYEE_AGE_CK                CK ((hire_date - DOB)/365) > 17                                              
+                DOB             EMPLOYEE_AGE_CK                CK ((hire_date - DOB)/365) > 17                                              
+                SUPER_ID        EMPLOYEE_SUPERID_FK            FK                                     EMPLOYEE: EMP_NUM                     
+                                EMPLOYEE_SUPERVISE_CK          CK super_id != emp_num                                                       
+                DEPT_CODE       EMPLOYEE_DEPTCODE_FK           FK                                     DEPARTMENT: DEPT_CODE                 
+                BONUS                                                                                                                       
+PROJECT         PROJ_NUMBER     PROJECT_PROJNUMBER_PK          PK                                                                           
+                NAME                                                                                                                        
+                START_DATE                                                                                                                  
+                TOTAL_COST                                                                                                                  
+                DEPT_CODE       PROJECT_DEPT_ADMIN_CK          CK Dept_Code != 'ADMIN'                                                      
+                                PROJECT_DEPTCODE_FK            FK                                     DEPARTMENT: DEPT_CODE                 
+                CLIENT_ID       PROJECT_CLIENTID_FK            FK                                     CLIENT: CLIENT_ID                     
+SKILL           CODE            SKILL_CODE_PK                  PK                                                                           
+                DESCRIPTION                                                                                                                 
+TRAINING        TRAIN_NUM       TRAINING_TRAINNUM_PK           PK                                                                           
+                CODE            TRAINING_CODE_FK               FK                                     SKILL: CODE                           
+                EMP_NUM         TRAINING_EMPNUM_FK             FK                                     EMPLOYEE: EMP_NUM                     
+                DATE_ACQUIRED                                                                                                               
+                NAME                                                                                                                        
+                COMMENTS                                                                                                                    
+
+
+
+
+
+                                                                END OF REPORT                                                               
+
+48 rows selected.
+
+SQL> 
+SQL>  spool out;
