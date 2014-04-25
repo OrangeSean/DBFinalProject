@@ -1,6 +1,7 @@
 clear column
-column id format 999
-column "employee name" format A30
+set linesize 300
+column id format A2
+column "employee name" format A20
 column JAVA1 format 9
 column JAVA2 format 9
 column J2EE format 9
@@ -10,6 +11,8 @@ column PRJM1 format 9
 column PRJM2 format 9
 column RUBY format 9
 column PYTHO format 9
+column MOBDA format 9
+column "Latest Date Acquired" heading "Latest|Date|Acquired" format A12
 
 select decode(emp_num, null, ' ', emp_num) id, 
 decode(emp_first || ' ' || emp_last, ' ', 'Number of Trainings', emp_first || ' ' || emp_last) "Employee Name",
@@ -37,3 +40,5 @@ count(code)
 from employee join training using (emp_num)
 group by GROUPING SETS 
   ((emp_num, emp_first, emp_last), ());
+  
+set linesize 180

@@ -1,5 +1,5 @@
 clear column
-column level format 99999
+column level format 99
 column employee format A25
 
 SELECT LEVEL,
