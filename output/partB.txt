@@ -1,0 +1,398 @@
+SQL> start D:\DBM\FP\partB\partB-1
+SQL> BREAK ON "EMPLOYEE"
+SQL> CLEAR COLUMN
+SQL> COLUMN "EMPLOYEE" FORMAT A30
+SQL> COLUMN "SKILL" FORMAT A10
+SQL> COLUMN "TIMES" FORMAT A5
+SQL> COLUMN "RECENT DATE" FORMAT A15
+SQL> SELECT EMP_NUM || ': ' || EMP_LAST || ' ' || EMP_FIRST "EMPLOYEE",
+  2  	     CODE "SKILL",
+  3  	     decode(TO_CHAR(COUNT(CODE)), 0, NULL, TO_CHAR(COUNT(CODE))) "TIMES",
+  4  	     TO_CHAR(MAX(DATE_ACQUIRED)) "RECENT DATE",
+  5  	     TRUNC(MONTHS_BETWEEN(SYSDATE, MAX(DATE_ACQUIRED))) "# MONTHS AGO"
+  6  FROM EMPLOYEE LEFT OUTER JOIN TRAINING USING (EMP_NUM)
+  7  GROUP BY EMP_NUM, EMP_LAST, EMP_FIRST, CODE
+  8  ORDER BY EMP_NUM;
+
+EMPLOYEE                       SKILL      TIMES RECENT DATE     # MONTHS AGO                                                                                                        
+------------------------------ ---------- ----- --------------- ------------                                                                                                        
+1: Blankenship Jin             PYTHO      1     05-SEP-13                  7                                                                                                        
+2: Bean Kasimir                                                                                                                                                                     
+3: Boyle Benedict                                                                                                                                                                   
+4: Mcgee Eugenia                                                                                                                                                                    
+5: Alford Brendan                                                                                                                                                                   
+6: Estes Chaim                                                                                                                                                                      
+7: Sharp Fuller                RUBY       1     05-SEP-13                  7                                                                                                        
+8: Simon Maisie                PYTHO      1     05-SEP-13                  7                                                                                                        
+9: Baldwin Sybil                                                                                                                                                                    
+10: Brock Ava                                                                                                                                                                       
+11: Matthews Ori                                                                                                                                                                    
+12: Holloway Wynter            J2EE       1     10-MAY-13                 11                                                                                                        
+                               JAVA1      4     05-SEP-13                  7                                                                                                        
+13: Swanson Margaret           PRJM1      1     06-MAY-12                 23                                                                                                        
+                               SQL1       1     11-MAY-13                 11                                                                                                        
+14: Acevedo Jolie              J2EE       1     07-MAY-11                 35                                                                                                        
+                               SQL1       1     12-NOV-11                 29                                                                                                        
+15: Faulkner Noah              JAVA1      1     08-DEC-11                 28                                                                                                        
+                               MOBDA      1     13-DEC-11                 28                                                                                                        
+16: Browning Nicole            J2EE       1     09-MAY-12                 23                                                                                                        
+                               MOBDA      3     14-JUL-13                  9                                                                                                        
+                               PRJM1      1     05-AUG-13                  8                                                                                                        
+17: Morrow Sasha               PRJM2      1     05-SEP-13                  7                                                                                                        
+18: Montgomery Baker           JAVA1      1     05-AUG-13                  8                                                                                                        
+19: Mcguire Amanda                                                                                                                                                                  
+20: Maddox Christian                                                                                                                                                                
+21: Drake Kibo                                                                                                                                                                      
+22: Butler Lana                                                                                                                                                                     
+23: Noel Amery                 SQL2       1     05-AUG-13                  8                                                                                                        
+24: Nguyen Lane                SQL2       1     05-SEP-13                  7                                                                                                        
+25: Wooten Alexa                                                                                                                                                                    
+26: Barry Phillip                                                                                                                                                                   
+27: Lloyd Mia                                                                                                                                                                       
+28: Kemp Natalie                                                                                                                                                                    
+29: Bernard Ashton                                                                                                                                                                  
+30: Halliwel Piper                                                                                                                                                                  
+
+36 rows selected.
+
+SQL> CLEAR BREAK COLUMN
+SQL> start D:\DBM\FP\partB\partB-2
+SQL> clear column
+SQL> column level format A5
+SQL> column employee format A25
+SQL> 
+SQL> SELECT LEVEL,
+  2  LPAD(' ', 3*(LEVEL - 1)) || emp_num || ' ' ||
+  3  emp_first || ' ' || emp_last "Employee", dept_code
+  4  FROM employee
+  5  START WITH emp_num = 1
+  6  CONNECT BY PRIOR emp_num = super_ID;
+
+     LEVEL Employee                  DEPT_CODE                                                                                                                                      
+---------- ------------------------- ----------                                                                                                                                     
+########## 1 Jin Blankenship         ADMIN                                                                                                                                          
+##########    2 Kasimir Bean         ACCTG                                                                                                                                          
+##########       7 Fuller Sharp      ACCTG                                                                                                                                          
+##########       8 Maisie Simon      ACCTG                                                                                                                                          
+##########       9 Sybil Baldwin     ACCTG                                                                                                                                          
+##########       10 Ava Brock        ACCTG                                                                                                                                          
+##########       11 Ori Matthews     ACCTG                                                                                                                                          
+##########    3 Benedict Boyle       OPRTN                                                                                                                                          
+##########       12 Wynter Holloway  OPRTN                                                                                                                                          
+##########       13 Margaret Swanson OPRTN                                                                                                                                          
+##########       14 Jolie Acevedo    OPRTN                                                                                                                                          
+##########       15 Noah Faulkner    OPRTN                                                                                                                                          
+##########       16 Nicole Browning  OPRTN                                                                                                                                          
+##########    4 Eugenia Mcgee        ITSUP                                                                                                                                          
+##########       17 Sasha Morrow     ITSUP                                                                                                                                          
+##########       18 Baker Montgomery ITSUP                                                                                                                                          
+##########       19 Amanda Mcguire   ITSUP                                                                                                                                          
+##########       20 Christian Maddox ITSUP                                                                                                                                          
+##########       21 Kibo Drake       ITSUP                                                                                                                                          
+##########       22 Lana Butler      ITSUP                                                                                                                                          
+##########    5 Brendan Alford       HR                                                                                                                                             
+##########       23 Amery Noel       HR                                                                                                                                             
+##########       24 Lane Nguyen      HR                                                                                                                                             
+##########       25 Alexa Wooten     HR                                                                                                                                             
+##########       26 Phillip Barry    HR                                                                                                                                             
+##########       27 Mia Lloyd        HR                                                                                                                                             
+##########    6 Chaim Estes          OPRTN                                                                                                                                          
+##########    28 Natalie Kemp        ADMIN                                                                                                                                          
+##########    29 Ashton Bernard      ADMIN                                                                                                                                          
+##########    30 Piper Halliwel      OPRTN                                                                                                                                          
+
+30 rows selected.
+
+SQL> clear column
+SQL> start D:\DBM\FP\partB\partB-3
+SQL> BREAK ON "ONGOING PROJECT NAME" ON START_DATE
+SQL> CLEAR COLUMN
+SQL> COLUMN "ONGOING PROJECT NAME" FORMAT A50
+SQL> COLUMN "MONTH" FORMAT A10
+SQL> SELECT DECODE(NAME, NULL, 'IN TOTAL', NAME) AS "ONGOING PROJECT NAME", START_DATE,
+  2  	     TO_CHAR(DATE_ASSIGNED, 'MON-YYYY') "MONTH",
+  3  	     COUNT(EMP_NUM) "#EMPLOYEES", SUM(HOURS_USED) "TOTAL HOURS"
+  4  FROM PROJECT LEFT OUTER JOIN ASSIGNMENT USING (PROJ_NUMBER)
+  5  WHERE TOTAL_COST IS NULL
+  6  GROUP BY GROUPING SETS ((NAME, START_DATE, TO_CHAR(DATE_ASSIGNED, 'MON-YYYY')), ());
+
+ONGOING PROJECT NAME                               START_DATE   MONTH      #EMPLOYEES TOTAL HOURS                                                                                   
+-------------------------------------------------- ------------ ---------- ---------- -----------                                                                                   
+Employee satisfication survey                      21-DEC-13    APR-2014            1         550                                                                                   
+                                                                DEC-2013            1         500                                                                                   
+                                                                FEB-2014            1         300                                                                                   
+                                                                JAN-2013            1         550                                                                                   
+                                                                JAN-2014            3        1020                                                                                   
+                                                                MAR-2014            1         500                                                                                   
+Option pricer calculator algorithm design          08-MAR-14    APR-2014            1         300                                                                                   
+                                                                MAR-2014            1         400                                                                                   
+AtCMUA Android mobile application development      01-JAN-14    FEB-2014            1         320                                                                                   
+                                                                JAN-2014            1         300                                                                                   
+IN TOTAL                                                                           12        4740                                                                                   
+
+11 rows selected.
+
+SQL> CLEAR BREAK
+SQL> start D:\DBM\FP\partB\partB-4
+SQL> alter table employee add bonus number(10);
+
+Table altered.
+
+SQL> update employee x set x.bonus =
+  2  (
+  3  	     select 200 * count(proj_number) from assignment join project using (proj_number)
+  4  	     where START_DATE > to_date('1-JAN-2013','DD-MON-YYYY') and hours_used > 40 and emp_num = x.emp_num
+  5  	     group by emp_num
+  6  	     having count(proj_number) > 0
+  7  );
+
+30 rows updated.
+
+SQL> start D:\DBM\FP\partB\partB-5
+SQL> BREAK ON "EMPLOYEE" ON HIRE_DATE ON "PROJECT NUMBER"
+SQL> CLEAR COLUMN
+SQL> COLUMN "EMPLOYEE" FORMAT A30
+SQL> COLUMN "SKILL" FORMAT A6
+SQL> COLUMN "TRAINING DATE" FORMAT A13
+SQL> SELECT EMP_LAST || ' ' || EMP_FIRST "EMPLOYEE", HIRE_DATE,
+  2  	     CODE "SKILL",
+  3  	     TO_CHAR(DATE_ACQUIRED) "TRAINING DATE",
+  4  	     TRUNC(DATE_ACQUIRED - HIRE_DATE) "DAYS AFTER HIRING",
+  5  	     DECODE(PROJ_NUM, NULL, 0, PROJ_NUM) "PROJECT NUMBER"
+  6  FROM EMPLOYEE LEFT OUTER JOIN TRAINING USING (EMP_NUM)
+  7  	     LEFT OUTER JOIN
+  8  	     ( SELECT EMP_NUM, COUNT(PROJ_NUMBER) AS PROJ_NUM
+  9  	     FROM ASSIGNMENT LEFT OUTER JOIN PROJECT USING (PROJ_NUMBER)
+ 10  	     GROUP BY EMP_NUM )
+ 11  	     USING (EMP_NUM)
+ 12  WHERE TO_NUMBER(TO_CHAR(HIRE_DATE, 'YYYY')) - TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) = -1;
+
+EMPLOYEE                       HIRE_DATE    SKILL  TRAINING DATE DAYS AFTER HIRING PROJECT NUMBER                                                                                   
+------------------------------ ------------ ------ ------------- ----------------- --------------                                                                                   
+Holloway Wynter                16-JAN-13    JAVA1  05-MAY-13                   109              2                                                                                   
+                                            J2EE   10-MAY-13                   114                                                                                                  
+                                            JAVA1  05-JUN-13                   140                                                                                                  
+                                            JAVA1  05-AUG-13                   201                                                                                                  
+                                            JAVA1  05-SEP-13                   232                                                                                                  
+Butler Lana                    06-OCT-13                                                        2                                                                                   
+Halliwel Piper                 12-SEP-13                                                        2                                                                                   
+
+7 rows selected.
+
+SQL> CLEAR BREAK COLUMN
+SQL> start D:\DBM\FP\partB\partB-6
+SQL> clear column
+SQL> column name format A50
+SQL> select proj_number, name, start_date, decode(total_cost, null, 'on-going', 'complete') as "status"
+  2  from project left outer join (
+  3  	     select P, sum(R) as iscontinue
+  4  	     from (
+  5  		     select P, A, S, E, mins, maxe, L, LO, PREV_LO,
+  6  			     decode(sign(LO - PREV_LO - L - 2), -1, 0, 1) as R
+  7  		     from (
+  8  			     select P, A, S, E, mins, maxe,
+  9  				     e - s as L,
+ 10  				     maxe - mins as LO,
+ 11  				     decode(lag((maxe - mins), 1) over (partition by P order by S), null, 0, lag((maxe - mins), 1) over (partition by P order by S)) as PREV_LO
+ 12  			     from (
+ 13  				     select proj_number as P, assign_num as A, date_assigned as S, decode(date_ended, null, sysdate, date_ended) as E,
+ 14  					     min(date_assigned) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as mins,
+ 15  					     max(decode(date_ended, null, sysdate, date_ended)) over (partition by proj_number order by date_assigned rows between unbounded preceding and current row) as maxe
+ 16  				     from assignment
+ 17  				     order by proj_number, date_assigned
+ 18  			     )
+ 19  		     )
+ 20  	     )
+ 21  	     group by P
+ 22  ) on (proj_number = P)
+ 23  where iscontinue != 0
+ 24  order by proj_number;
+
+PROJ_NUMBER NAME                                               START_DATE   status                                                                                                  
+----------- -------------------------------------------------- ------------ ----------------                                                                                        
+         67 Process Efficiency Evaluation for Wearhouse Shirts 22-JUN-13    complete                                                                                                
+        100 Universal Robina Just In Time Inventory            17-NOV-13    complete                                                                                                
+        101 Proctor and Gable Enterprise Resouce Management    18-NOV-13    complete                                                                                                
+        102 Novare Staff Right Sizing                          19-NOV-13    complete                                                                                                
+        103 Pointwest Technologies Disaster Mangement System   20-NOV-13    complete                                                                                                
+        104 Champ Cargosystem Lux                              21-NOV-13    complete                                                                                                
+        105 Seven Seven Disaster  Risk Assessment              22-NOV-13    complete                                                                                                
+        106 Big Pond CMMI Audit                                23-NOV-13    complete                                                                                                
+        107 Navitaire CMMI Audit                               24-NOV-13    complete                                                                                                
+        108 Ayala Technologies Effective Recruitment           25-NOV-13    complete                                                                                                
+        110 AtCMUA Android mobile application development      01-JAN-14    on-going                                                                                                
+
+11 rows selected.
+
+SQL> start D:\DBM\FP\partB\partB-7
+SQL> CLEAR COLUMN
+SQL> COLUMN QUARTER FORMAT A5
+SQL> SELECT DECODE(TO_NUMBER(TO_CHAR(START_DATE, 'MM')),
+  2  	     1, 'Q1', 2, 'Q1', 3, 'Q1',
+  3  	     4, 'Q2', 5, 'Q2', 6, 'Q2',
+  4  	     7, 'Q3', 8, 'Q3', 9, 'Q3',
+  5  	     10, 'Q4', 11, 'Q4', 12, 'Q4', 'ERROR') AS QUARTER,
+  6  	     COUNT(PROJ_NUMBER) "PROJ NUM",
+  7  	     COUNT(DISTINCT(EMP_NUM)) "EMP NUM",
+  8  	     SUM(HOURS_USED) "HOURS USED"
+  9  FROM PROJECT LEFT OUTER JOIN ASSIGNMENT USING (PROJ_NUMBER)
+ 10  WHERE TO_NUMBER(TO_CHAR(START_DATE, 'YYYY')) - TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) = -1
+ 11  GROUP BY DECODE(TO_NUMBER(TO_CHAR(START_DATE, 'MM')),
+ 12  	     1, 'Q1', 2, 'Q1', 3, 'Q1',
+ 13  	     4, 'Q2', 5, 'Q2', 6, 'Q2',
+ 14  	     7, 'Q3', 8, 'Q3', 9, 'Q3',
+ 15  	     10, 'Q4', 11, 'Q4', 12, 'Q4', 'ERROR')
+ 16  ORDER BY QUARTER;
+
+QUART   PROJ NUM    EMP NUM HOURS USED                                                                                                                                              
+----- ---------- ---------- ----------                                                                                                                                              
+Q1             4          4        477                                                                                                                                              
+Q2             2          1        280                                                                                                                                              
+Q3             3          3        763                                                                                                                                              
+Q4            28         17       6721                                                                                                                                              
+
+SQL> start D:\DBM\FP\partB\partB-8
+SQL> clear column
+SQL> column id format 999
+SQL> column "employee name" format A30
+SQL> column JAVA1 format 9
+SQL> column JAVA2 format 9
+SQL> column J2EE format 9
+SQL> column SQL1 format 9
+SQL> column SQL2 format 9
+SQL> column PRJM1 format 9
+SQL> column PRJM2 format 9
+SQL> column RUBY format 9
+SQL> column PYTHO format 9
+SQL> 
+SQL> select decode(emp_num, null, ' ', emp_num) id,
+  2  decode(emp_first || ' ' || emp_last, ' ', 'Number of Trainings', emp_first || ' ' || emp_last) "Employee Name",
+  3  sum(decode(code, 'JAVA1', 1, 0)) "JAVA1",
+  4  nvl(to_char(max(case when code = 'JAVA1' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+  5  sum(decode(code, 'JAVA2', 1, 0)) "JAVA2",
+  6  nvl(to_char(max(case when code = 'JAVA2' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+  7  sum(decode(code, 'J2EE', 1, 0)) "J2EE",
+  8  nvl(to_char(max(case when code = 'J2EE' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+  9  sum(decode(code, 'MOBDA', 1, 0)) "MOBDA",
+ 10  nvl(to_char(max(case when code = 'MOBDA' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 11  sum(decode(code, 'PRJM1', 1, 0)) "PRJM1",
+ 12  nvl(to_char(max(case when code = 'PRJM1' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 13  sum(decode(code, 'PRJM2', 1, 0)) "PRJM2",
+ 14  nvl(to_char(max(case when code = 'PRJM2' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 15  sum(decode(code, 'PYTHO', 1, 0)) "PYTHO",
+ 16  nvl(to_char(max(case when code = 'PYTHO' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 17  sum(decode(code, 'RUBY', 1, 0)) "RUBY",
+ 18  nvl(to_char(max(case when code = 'RUBY' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 19  sum(decode(code, 'SQL1', 1, 0)) "SQL1",
+ 20  nvl(to_char(max(case when code = 'SQL1' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 21  sum(decode(code, 'SQL2', 1, 0)) "SQL2",
+ 22  nvl(to_char(max(case when code = 'SQL2' then  date_acquired else null end), 'dd-Mon-yyyy'), ' ') as "Latest Date Acquired",
+ 23  count(code)
+ 24  from employee join training using (emp_num)
+ 25  group by GROUPING SETS
+ 26    ((emp_num, emp_first, emp_last), ());
+
+ID                                                                               Employee Name                  JAVA1 Latest Date Acquired                     JAVA2                
+-------------------------------------------------------------------------------- ------------------------------ ----- ---------------------------------------- -----                
+Latest Date Acquired                     J2EE Latest Date Acquired                          MOBDA Latest Date Acquired                     PRJM1                                    
+---------------------------------------- ---- ---------------------------------------- ---------- ---------------------------------------- -----                                    
+Latest Date Acquired                     PRJM2 Latest Date Acquired                     PYTHO Latest Date Acquired                     RUBY Latest Date Acquired                    
+---------------------------------------- ----- ---------------------------------------- ----- ---------------------------------------- ---- ----------------------------------------
+SQL1 Latest Date Acquired                     SQL2 Latest Date Acquired                     COUNT(CODE)                                                                             
+---- ---------------------------------------- ---- ---------------------------------------- -----------                                                                             
+1                                                                                Jin Blankenship                    0                                              0                
+                                            0                                                   0                                              0                                    
+                                             0                                              1 05-Sep-2013                                 0                                         
+   0                                             0                                                    1                                                                             
+                                                                                                                                                                                    
+7                                                                                Fuller Sharp                       0                                              0                
+                                            0                                                   0                                              0                                    
+                                             0                                              0                                             1 05-Sep-2013                             
+   0                                             0                                                    1                                                                             
+                                                                                                                                                                                    
+8                                                                                Maisie Simon                       0                                              0                
+                                            0                                                   0                                              0                                    
+                                             0                                              1 05-Sep-2013                                 0                                         
+   0                                             0                                                    1                                                                             
+                                                                                                                                                                                    
+12                                                                               Wynter Holloway                    4 05-Sep-2013                                  0                
+                                            1 10-May-2013                                       0                                              0                                    
+                                             0                                              0                                             0                                         
+   0                                             0                                                    5                                                                             
+                                                                                                                                                                                    
+13                                                                               Margaret Swanson                   0                                              0                
+                                            0                                                   0                                              1                                    
+06-May-2012                                  0                                              0                                             0                                         
+   1 11-May-2013                                 0                                                    2                                                                             
+                                                                                                                                                                                    
+14                                                                               Jolie Acevedo                      0                                              0                
+                                            1 07-May-2011                                       0                                              0                                    
+                                             0                                              0                                             0                                         
+   1 12-Nov-2011                                 0                                                    2                                                                             
+                                                                                                                                                                                    
+15                                                                               Noah Faulkner                      1 08-Dec-2011                                  0                
+                                            0                                                   1 13-Dec-2011                                  0                                    
+                                             0                                              0                                             0                                         
+   0                                             0                                                    2                                                                             
+                                                                                                                                                                                    
+16                                                                               Nicole Browning                    0                                              0                
+                                            1 09-May-2012                                       3 14-Jul-2013                                  1                                    
+05-Aug-2013                                  0                                              0                                             0                                         
+   0                                             0                                                    5                                                                             
+                                                                                                                                                                                    
+17                                                                               Sasha Morrow                       0                                              0                
+                                            0                                                   0                                              0                                    
+                                             1 05-Sep-2013                                  0                                             0                                         
+   0                                             0                                                    1                                                                             
+                                                                                                                                                                                    
+18                                                                               Baker Montgomery                   1 05-Aug-2013                                  0                
+                                            0                                                   0                                              0                                    
+                                             0                                              0                                             0                                         
+   0                                             0                                                    1                                                                             
+                                                                                                                                                                                    
+23                                                                               Amery Noel                         0                                              0                
+                                            0                                                   0                                              0                                    
+                                             0                                              0                                             0                                         
+   0                                             1 05-Aug-2013                                        1                                                                             
+                                                                                                                                                                                    
+24                                                                               Lane Nguyen                        0                                              0                
+                                            0                                                   0                                              0                                    
+                                             0                                              0                                             0                                         
+   0                                             1 05-Sep-2013                                        1                                                                             
+                                                                                                                                                                                    
+                                                                                 Number of Trainings                6 05-Sep-2013                                  0                
+                                            3 10-May-2013                                       4 14-Jul-2013                                  2                                    
+05-Aug-2013                                  1 05-Sep-2013                                  2 05-Sep-2013                                 1 05-Sep-2013                             
+   2 11-May-2013                                 2 05-Sep-2013                                       23                                                                             
+                                                                                                                                                                                    
+
+13 rows selected.
+
+SQL> start D:\DBM\FP\partB\partB-9
+SQL> CLEAR COLUMN
+SQL> COLUMN "DEPARTMENT" FORMAT A30
+SQL> SELECT DEPARTMENT.NAME "DEPARTMENT",
+  2  	     SKILL.CODE "SKILL", COUNT(TRAIN_NUM) "TRAIN TIMES",
+  3  	     RANK() OVER (ORDER BY COUNT(SKILL.CODE) DESC) AS "RANK"
+  4  FROM EMPLOYEE JOIN TRAINING ON EMPLOYEE.EMP_NUM = TRAINING.EMP_NUM
+  5  	     JOIN SKILL ON SKILL.CODE = TRAINING.CODE
+  6  	     JOIN DEPARTMENT ON DEPARTMENT.DEPT_CODE= EMPLOYEE.DEPT_CODE
+  7  GROUP BY DEPARTMENT.DEPT_CODE, DEPARTMENT.NAME, SKILL.CODE;
+
+DEPARTMENT                     SKILL      TRAIN TIMES       RANK                                                                                                                    
+------------------------------ ---------- ----------- ----------                                                                                                                    
+Operations                     JAVA1                5          1                                                                                                                    
+Operations                     MOBDA                4          2                                                                                                                    
+Operations                     J2EE                 3          3                                                                                                                    
+Operations                     SQL1                 2          4                                                                                                                    
+Operations                     PRJM1                2          4                                                                                                                    
+Human Resource                 SQL2                 2          4                                                                                                                    
+IT Support                     JAVA1                1          7                                                                                                                    
+Accounting                     RUBY                 1          7                                                                                                                    
+Administration                 PYTHO                1          7                                                                                                                    
+Accounting                     PYTHO                1          7                                                                                                                    
+IT Support                     PRJM2                1          7                                                                                                                    
+
+11 rows selected.
+
+SQL> spool out

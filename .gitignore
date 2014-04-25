@@ -1,7 +1,4 @@
 # query output files
-spoolout.txt
-partDResults.txt
+output/
 
 # output text
-.txt
-/.project
