@@ -1,4 +1,4 @@
-SQL> start D:\DBM\FP\partD\partD
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partD\partD
 SQL> ---------------------------PART D REPORT
 SQL> -- Format
 SQL> SET FEEDBACK OFF LINESIZE 160 PAGESIZE 40
@@ -29,13 +29,13 @@ SQL> SELECT DEPARTMENT.NAME AS DEPARTMENT, PROJECT.NAME AS PROJECT,
  10  HAVING MAX(ASSIGNMENT.DATE_ENDED) < TO_DATE('31-DEC-2014','DD-MON-YYYY')
  11  ORDER BY DEPARTMENT, TOTAL_COST DESC;
 
-Fri Apr 25                                                                                                                                             page    1
+Sat Apr 26                                                                                                                                             page    1
                                                                    TOTAL COST PER DEPARTMENT 
                                                             FROM JANUARY 1, 2011 TO DECEMBER 31, 2014
 
                                                                                DURATION                                        HOURLY COST                      
 DEPARTMENT                PROJECT                                             (IN HOURS) TOTAL COST EMPLOYEES# COST PER HOUR    PER PERSON                      
-------------------------- -------------------------------------------------- ----------- ---------- ---------- --------------- ------------------------         
+------------------------- -------------------------------------------------- ----------- ---------- ---------- --------------- ------------                     
 Accounting                Option pricer calculator algorithm design                  700                     2                                                  
                           Real Estate Appraisal for Hilton Hotels                     47    $439174          1     $9344.13        $9344.13                     
                           Pointwest Technologies Disaster Mangement System           320    $327130          2     $1022.28         $511.14                     
@@ -67,7 +67,7 @@ Operations                Feasibility Study on Waste Management in Manila       
 TOTAL DEPARTMENT COST                                                                       $978547                                                             
                                                                                                                                                                 
 
-                                                                         END OF REPORT-                                                               RUN BY: FP
+                                                                         END OF REPORT-                                                            RUN BY: HOMER
 SQL> -- End SQL query
 SQL> TTITLE OFF
 SQL> BTITLE OFF

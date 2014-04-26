@@ -13,6 +13,7 @@ column RUBY format 9
 column PYTHO format 9
 column MOBDA format 9
 column "Latest Date Acquired" heading "Latest|Date|Acquired" format A12
+column  count(code) heading "Number|of|Skills" format 99
 
  select decode(emp_num, null, ' ', emp_num) id,
  decode(emp_first || ' ' || emp_last, ' ', 'Number of Trainings', emp_first || ' ' || emp_last) "Employee Name",

@@ -1,4 +1,4 @@
-SQL> start D:\DBM\FP\partC\partC-1
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partC\partC-1
 SQL> TTITLE 'Employee Information'
 SQL> set pagesize 100 linesize 150
 SQL> column employee format A18
@@ -18,23 +18,23 @@ SQL> select e.emp_first || ' ' || e.emp_last as employee,
   7  		     inner join skill sk   on t.code = sk.code
   8  order by e.emp_last;
 
-Fri Apr 25                                                                                                                                   page    1
+Sat Apr 26                                                                                                                                   page    1
                                                                  Employee Information
 
                                                                                                                                         Months        
                                                                              Date                                                        Since        
 EMPLOYEE           SUPERVISOR       TRAINING                                 Acquired        SKILL                                    Training        
 ------------------ ---------------- ---------------------------------------- --------------- ---------------------------------------- --------        
-Jolie Acevedo      Benedict Boyle   Struts                                   07-MAY-11       Java Enterprise Edition - servlets,            36        
-                                                                                             jsp, servers                                             
+Jolie Acevedo      Benedict Boyle   Struts                                   07-MAY-11       Java Enterprise Edition - servlets, jsp,       36        
+                                                                                             servers                                                  
                                                                                                                                                       
                    Benedict Boyle   Mainframe and assembly                   12-NOV-11       Basic queries using oracle SQL                 29        
 ******************                  ----------------------------------------                                                                          
 Number of Training                  2                                                                                                                 
                                                                                                                                                       
 Nicole Browning    Benedict Boyle   IOS Mobile Development                   14-MAY-13       Android mobile development                     11        
-                   Benedict Boyle   Black box testing and use cases          09-MAY-12       Java Enterprise Edition - servlets,            24        
-                                                                                             jsp, servers                                             
+                   Benedict Boyle   Black box testing and use cases          09-MAY-12       Java Enterprise Edition - servlets, jsp,       24        
+                                                                                             servers                                                  
                                                                                                                                                       
                    Benedict Boyle   IOS Mobile Development                   14-JUN-13       Android mobile development                     10        
                    Benedict Boyle   Spring IOC, MVC                          05-AUG-13       Project management 1 for PMI                    9        
@@ -49,8 +49,8 @@ Noah Faulkner      Benedict Boyle   Unit testing and regression testing      08-
 ******************                  ----------------------------------------                                                                          
 Number of Training                  2                                                                                                                 
                                                                                                                                                       
-Wynter Holloway    Benedict Boyle   Struts vs Spring                         10-MAY-13       Java Enterprise Edition - servlets,            12        
-                                                                                             jsp, servers                                             
+Wynter Holloway    Benedict Boyle   Struts vs Spring                         10-MAY-13       Java Enterprise Edition - servlets, jsp,       12        
+                                                                                             servers                                                  
                                                                                                                                                       
                    Benedict Boyle   Spring IOC, MVC                          05-JUN-13       Basic programming with Java                    11        
                    Benedict Boyle   Spring IOC, MVC                          05-SEP-13       Basic programming with Java                     8        
@@ -88,15 +88,12 @@ Number of Training                  1
 Margaret Swanson   Benedict Boyle   PPM for PMI Certification                06-MAY-12       Project management 1 for PMI                   24        
                                                                                              certification                                            
                                                                                                                                                       
-                   Benedict Boyle   Mobile development                       11-MAY-13       Basic queries using oracle SQL                 11        
+                   Benedict Boyle   Mobile development                       11-MAY-13       Basic queries using oracle SQL                 12        
 ******************                  ----------------------------------------                                                                          
 Number of Training                  2                                                                                                                 
                                                                                                                                                       
-
-22 rows selected.
-
 SQL> set linesize 180 pagesize 200
-SQL> start D:\DBM\FP\partC\partC-2
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partC\partC-2
 SQL> set linesize 140 pagesize 60
 SQL> clear column
 SQL> break on "table_name" on "column_name"
@@ -124,18 +121,18 @@ SQL> select utc.table_name,  utc.column_name,
  14  ) t5 on (utc.table_name = t5.table_name and utc.column_name = t5.column_name)
  15  order by table_name, column_id;
 
-Fri Apr 25                                                                                                                         page    1
+Sat Apr 26                                                                                                                         page    1
                                                           CONSTRAINTS INFORMATION
 
-TABLE_NAME      COLUMN_NAME     CONSTRAINT_NAME                CONS SEARCH_CONDITION                    REFERENCE                           
---------------- --------------- ------------------------------ ---- ----------------------------------- -------------------------           
+TABLE_NAME      COLUMN_NAME     CONSTRAINT_NAME                CO SEARCH_CONDITION                    REFERENCE                             
+--------------- --------------- ------------------------------ -- ----------------------------------- -------------------------             
 ASSIGNMENT      ASSIGN_NUM      ASSIGNMENT_ASSIGNNUM_PK        PK                                                                           
                 PROJ_NUMBER     ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
-                                ASSIGNMENT_PROJECTNUMBER_FK    FK                                       PROJECT: PROJ_NUMBER                
-                EMP_NUM         ASSIGNMENT_EMPNUM_FK           FK                                       EMPLOYEE: EMP_NUM                   
-                DATE_ASSIGNED   ASSIGNMENT_ENDASSIGN_CK        CK   Date_Assigned < Date_Ended                                              
+                                ASSIGNMENT_PROJECTNUMBER_FK    FK                                     PROJECT: PROJ_NUMBER                  
+                EMP_NUM         ASSIGNMENT_EMPNUM_FK           FK                                     EMPLOYEE: EMP_NUM                     
+                DATE_ASSIGNED   ASSIGNMENT_ENDASSIGN_CK        CK Date_Assigned < Date_Ended                                                
                 DATE_ENDED      ASSIGNMENT_MONTHPROJ_CK        UK                                                                           
-                                ASSIGNMENT_ENDASSIGN_CK        CK   Date_Assigned < Date_Ended                                              
+                                ASSIGNMENT_ENDASSIGN_CK        CK Date_Assigned < Date_Ended                                                
                 HOURS_USED                                                                                                                  
 CLIENT          CLIENT_ID       CLIENT_CLIENTID_PK             PK                                                                           
                 NAME                                                                                                                        
@@ -151,29 +148,29 @@ DEPARTMENT      DEPT_CODE       DEPARTMENT_DEPTCODE_PK         PK
                 NAME                                                                                                                        
                 LOCATION                                                                                                                    
                 PHONE                                                                                                                       
-                MANAGER_ID      DEPARTMENT_MANAGERID_FK        FK                                       EMPLOYEE: EMP_NUM                   
+                MANAGER_ID      DEPARTMENT_MANAGERID_FK        FK                                     EMPLOYEE: EMP_NUM                     
 EMPLOYEE        EMP_NUM         EMPLOYEE_EMPNUM_PK             PK                                                                           
-                                EMPLOYEE_SUPERVISE_CK          CK   super_id != emp_num                                                     
+                                EMPLOYEE_SUPERVISE_CK          CK super_id != emp_num                                                       
                 EMP_LAST                                                                                                                    
                 EMP_FIRST                                                                                                                   
-                HIRE_DATE       EMPLOYEE_AGE_CK                CK   ((hire_date - DOB)/365) > 17                                            
-                DOB             EMPLOYEE_AGE_CK                CK   ((hire_date - DOB)/365) > 17                                            
-                SUPER_ID        EMPLOYEE_SUPERID_FK            FK                                       EMPLOYEE: EMP_NUM                   
-                                EMPLOYEE_SUPERVISE_CK          CK   super_id != emp_num                                                     
-                DEPT_CODE       EMPLOYEE_DEPTCODE_FK           FK                                       DEPARTMENT: DEPT_CODE               
+                HIRE_DATE       EMPLOYEE_AGE_CK                CK ((hire_date - DOB)/365) > 17                                              
+                DOB             EMPLOYEE_AGE_CK                CK ((hire_date - DOB)/365) > 17                                              
+                SUPER_ID        EMPLOYEE_SUPERID_FK            FK                                     EMPLOYEE: EMP_NUM                     
+                                EMPLOYEE_SUPERVISE_CK          CK super_id != emp_num                                                       
+                DEPT_CODE       EMPLOYEE_DEPTCODE_FK           FK                                     DEPARTMENT: DEPT_CODE                 
                 BONUS                                                                                                                       
 PROJECT         PROJ_NUMBER     PROJECT_PROJNUMBER_PK          PK                                                                           
                 NAME                                                                                                                        
                 START_DATE                                                                                                                  
                 TOTAL_COST                                                                                                                  
-                DEPT_CODE       PROJECT_DEPT_ADMIN_CK          CK   Dept_Code != 'ADMIN'                                                    
-                                PROJECT_DEPTCODE_FK            FK                                       DEPARTMENT: DEPT_CODE               
-                CLIENT_ID       PROJECT_CLIENTID_FK            FK                                       CLIENT: CLIENT_ID                   
+                DEPT_CODE       PROJECT_DEPT_ADMIN_CK          CK Dept_Code != 'ADMIN'                                                      
+                                PROJECT_DEPTCODE_FK            FK                                     DEPARTMENT: DEPT_CODE                 
+                CLIENT_ID       PROJECT_CLIENTID_FK            FK                                     CLIENT: CLIENT_ID                     
 SKILL           CODE            SKILL_CODE_PK                  PK                                                                           
                 DESCRIPTION                                                                                                                 
 TRAINING        TRAIN_NUM       TRAINING_TRAINNUM_PK           PK                                                                           
-                CODE            TRAINING_CODE_FK               FK                                       SKILL: CODE                         
-                EMP_NUM         TRAINING_EMPNUM_FK             FK                                       EMPLOYEE: EMP_NUM                   
+                CODE            TRAINING_CODE_FK               FK                                     SKILL: CODE                           
+                EMP_NUM         TRAINING_EMPNUM_FK             FK                                     EMPLOYEE: EMP_NUM                     
                 DATE_ACQUIRED                                                                                                               
                 NAME                                                                                                                        
                 COMMENTS                                                                                                                    
@@ -183,9 +180,6 @@ TRAINING        TRAIN_NUM       TRAINING_TRAINNUM_PK           PK
 
 
                                                                 END OF REPORT                                                               
-
-48 rows selected.
-
 SQL> 
 SQL> clear break column
 SQL> ttitle off

@@ -12,4 +12,5 @@ start D:\DBM\FP\partA\training.sql;
 start D:\DBM\FP\partA\client.sql;
 start D:\DBM\FP\partA\project.sql;
 start D:\DBM\FP\partA\assignment.sql;
+start D:\DBM\FP\partA\listAll.sql;
 spool out

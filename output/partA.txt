@@ -1,45 +1,18 @@
-SQL> start D:\DBM\FP\partA\homer.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\homer.sql;
 SQL> ALTER TABLE employee drop constraint employee_deptcode_FK;
-
-Table altered.
-
 SQL> DROP TABLE training purge;
-
-Table dropped.
-
 SQL> DROP TABLE assignment purge;
-
-Table dropped.
-
 SQL> DROP TABLE project purge;
-
-Table dropped.
-
 SQL> DROP TABLE department purge;
-
-Table dropped.
-
 SQL> DROP TABLE employee purge;
-
-Table dropped.
-
 SQL> DROP TABLE client purge;
-
-Table dropped.
-
 SQL> DROP TABLE skill purge;
-
-Table dropped.
-
 SQL> 
 SQL> CREATE TABLE skill
   2  ( Code VARCHAR2(5),
   3    Description VARCHAR2(350),
   4    CONSTRAINT skill_code_PK PRIMARY KEY (Code)
   5  );
-
-Table created.
-
 SQL> 
 SQL> CREATE TABLE client
   2  ( Client_ID VARCHAR2(4),
@@ -54,9 +27,6 @@ SQL> CREATE TABLE client
  11    Contact_Name VARCHAR(30),
  12    CONSTRAINT client_clientid_PK PRIMARY KEY (Client_ID)
  13  );
-
-Table created.
-
 SQL> 
 SQL> CREATE TABLE employee
   2  ( Emp_Num	     NUMBER(5),
@@ -71,9 +41,6 @@ SQL> CREATE TABLE employee
  11    CONSTRAINT employee_age_ck check (((hire_date - DOB)/365) > 17),
  12    CONSTRAINT employee_supervise_ck check (super_id != emp_num)
  13  );
-
-Table created.
-
 SQL> 
 SQL> CREATE TABLE department
   2  ( Dept_Code     VARCHAR2(5),
@@ -84,9 +51,6 @@ SQL> CREATE TABLE department
   7    CONSTRAINT department_deptcode_PK PRIMARY KEY (Dept_Code),
   8    CONSTRAINT department_managerid_FK FOREIGN KEY (Manager_ID) REFERENCES Employee (Emp_Num)
   9  );
-
-Table created.
-
 SQL> 
 SQL> CREATE TABLE project
   2  ( Proj_Number NUMBER(3),
@@ -100,9 +64,6 @@ SQL> CREATE TABLE project
  10    CONSTRAINT project_clientid_FK FOREIGN KEY (Client_ID) REFERENCES Client (Client_ID),
  11    CONSTRAINT project_dept_admin_CK check (Dept_Code != 'ADMIN')
  12  );
-
-Table created.
-
 SQL> 
 SQL> CREATE TABLE assignment
   2  ( Assign_Num  NUMBER(5),
@@ -117,9 +78,6 @@ SQL> CREATE TABLE assignment
  11    CONSTRAINT assignment_endassign_CK check (Date_Assigned < Date_Ended),
  12    CONSTRAINT assignment_monthproj_CK unique (date_ended, proj_number)
  13  );
-
-Table created.
-
 SQL> 
 SQL> CREATE TABLE training
   2  ( Train_Num NUMBER(5),
@@ -132,732 +90,411 @@ SQL> CREATE TABLE training
   9    CONSTRAINT training_code_FK FOREIGN KEY (Code) REFERENCES Skill (Code),
  10    CONSTRAINT training_empnum_FK FOREIGN KEY (Emp_Num) REFERENCES Employee (Emp_Num)
  11  );
-
-Table created.
-
 SQL> 
 SQL> ALTER TABLE EMPLOYEE ADD CONSTRAINT employee_deptcode_FK FOREIGN KEY (Dept_Code) REFERENCES Department (Dept_Code);
-
-Table altered.
-
-SQL> start D:\DBM\FP\partA\skill.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\skill.sql;
 SQL> --------------------------------------------------------
 SQL> --  File created - Thursday-April-10-2014
 SQL> --------------------------------------------------------
 SQL> REM INSERTING into SKILL
 SQL> SET DEFINE OFF;
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('JAVA1','Basic programming with Java');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('JAVA2','Advanced programming with Java');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('J2EE','Java Enterprise Edition - servlets, jsp, servers');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('SQL1','Basic queries using oracle SQL');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('SQL2','Advance qureies using oracle SQL');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('PRJM1','Project management 1 for PMI certification');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('PRJM2','IT Project mangement for PMI certification');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('RUBY','Web development with Ruby on rails');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('PYTHO','Web development with Python');
-
-1 row created.
-
 SQL> Insert into SKILL (CODE,DESCRIPTION) values ('MOBDA','Android mobile development');
-
-1 row created.
-
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\department.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\department.sql;
 SQL> --------------------------------------------------------
 SQL> --  File created - Friday-April-11-2014
 SQL> --------------------------------------------------------
 SQL> Insert into DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('ACCTG','Accounting','Grouger St. Adelaide','(408) 777-9220',null);
-
-1 row created.
-
 SQL> Insert into DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('OPRTN','Operations','Bideford St. Clarence Gardens','(674) 290-5550',null);
-
-1 row created.
-
 SQL> Insert into DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('ITSUP','IT Support','Osmena Makati City','(273) 961-7241',null);
-
-1 row created.
-
 SQL> Insert into DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('HR','Human Resource','Osmena Makati City','(638) 439-5070',null);
-
-1 row created.
-
 SQL> Insert into DEPARTMENT (DEPT_CODE,NAME,LOCATION,PHONE,MANAGER_ID) values ('ADMIN','Administration','Victoria Square, Adelaide','(408) 932-8865',null);
-
-1 row created.
-
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\employee.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\employee.sql;
 SQL> --------------------------------------------------------
 SQL> --  File created - Wednesday-April-16-2014
 SQL> --------------------------------------------------------
 SQL> REM INSERTING into EMPLOYEE
 SQL> SET DEFINE OFF;
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (1,'Blankenship','Jin',to_date('09-APR-19','DD-MON-RR'),to_date('16-APR-74','DD-MON-RR'),null,'ADMIN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (2,'Bean','Kasimir',to_date('27-MAR-11','DD-MON-RR'),to_date('19-FEB-79','DD-MON-RR'),1,'ACCTG');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (3,'Boyle','Benedict',to_date('26-MAR-09','DD-MON-RR'),to_date('28-MAR-63','DD-MON-RR'),1,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (4,'Mcgee','Eugenia',to_date('26-MAR-11','DD-MON-RR'),to_date('13-JUN-74','DD-MON-RR'),1,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (5,'Alford','Brendan',to_date('17-MAR-11','DD-MON-RR'),to_date('21-OCT-60','DD-MON-RR'),1,'HR');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (6,'Estes','Chaim',to_date('14-MAR-11','DD-MON-RR'),to_date('22-APR-72','DD-MON-RR'),1,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (7,'Sharp','Fuller',to_date('14-MAR-11','DD-MON-RR'),to_date('05-JUL-81','DD-MON-RR'),2,'ACCTG');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (8,'Simon','Maisie',to_date('09-MAR-11','DD-MON-RR'),to_date('03-MAY-89','DD-MON-RR'),2,'ACCTG');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (9,'Baldwin','Sybil',to_date('14-FEB-09','DD-MON-RR'),to_date('19-JUN-73','DD-MON-RR'),2,'ACCTG');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (10,'Brock','Ava',to_date('06-FEB-11','DD-MON-RR'),to_date('26-JUN-63','DD-MON-RR'),2,'ACCTG');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (11,'Matthews','Ori',to_date('29-JAN-10','DD-MON-RR'),to_date('11-JUN-72','DD-MON-RR'),2,'ACCTG');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (12,'Holloway','Wynter',to_date('16-JAN-13','DD-MON-RR'),to_date('12-FEB-69','DD-MON-RR'),3,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (13,'Swanson','Margaret',to_date('07-JAN-11','DD-MON-RR'),to_date('27-SEP-79','DD-MON-RR'),3,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (14,'Acevedo','Jolie',to_date('05-JAN-08','DD-MON-RR'),to_date('03-AUG-72','DD-MON-RR'),3,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (15,'Faulkner','Noah',to_date('30-NOV-11','DD-MON-RR'),to_date('21-AUG-65','DD-MON-RR'),3,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (16,'Browning','Nicole',to_date('18-NOV-11','DD-MON-RR'),to_date('05-JUN-87','DD-MON-RR'),3,'OPRTN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (17,'Morrow','Sasha',to_date('15-NOV-11','DD-MON-RR'),to_date('01-MAR-88','DD-MON-RR'),4,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (18,'Montgomery','Baker',to_date('08-NOV-11','DD-MON-RR'),to_date('15-MAY-88','DD-MON-RR'),4,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (19,'Mcguire','Amanda',to_date('06-NOV-08','DD-MON-RR'),to_date('29-SEP-81','DD-MON-RR'),4,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (20,'Maddox','Christian',to_date('03-NOV-11','DD-MON-RR'),to_date('30-SEP-79','DD-MON-RR'),4,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (21,'Drake','Kibo',to_date('16-OCT-12','DD-MON-RR'),to_date('11-MAY-85','DD-MON-RR'),4,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (22,'Butler','Lana',to_date('06-OCT-13','DD-MON-RR'),to_date('09-DEC-89','DD-MON-RR'),4,'ITSUP');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (23,'Noel','Amery',to_date('03-OCT-11','DD-MON-RR'),to_date('02-AUG-79','DD-MON-RR'),5,'HR');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (24,'Nguyen','Lane',to_date('30-SEP-11','DD-MON-RR'),to_date('02-JUN-83','DD-MON-RR'),5,'HR');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (25,'Wooten','Alexa',to_date('29-SEP-11','DD-MON-RR'),to_date('11-JUN-87','DD-MON-RR'),5,'HR');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (26,'Barry','Phillip',to_date('15-SEP-11','DD-MON-RR'),to_date('06-JAN-66','DD-MON-RR'),5,'HR');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (27,'Lloyd','Mia',to_date('14-SEP-10','DD-MON-RR'),to_date('12-MAY-79','DD-MON-RR'),5,'HR');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (28,'Kemp','Natalie',to_date('04-SEP-11','DD-MON-RR'),to_date('18-AUG-71','DD-MON-RR'),1,'ADMIN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (29,'Bernard','Ashton',to_date('23-AUG-12','DD-MON-RR'),to_date('16-APR-81','DD-MON-RR'),1,'ADMIN');
-
-1 row created.
-
 SQL> Insert into EMPLOYEE (EMP_NUM,EMP_LAST,EMP_FIRST,HIRE_DATE,DOB,SUPER_ID,DEPT_CODE) values (30,'Halliwel','Piper',to_date('12-SEP-13','DD-MON-RR'),to_date('16-NOV-71','DD-MON-RR'),1,'OPRTN');
-
-1 row created.
-
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\department_manager_id.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\department_manager_id.sql;
 SQL> Update department set manager_id = '2' where dept_code = 'ACCTG';
-
-1 row updated.
-
 SQL> Update department set manager_id = '3' where dept_code = 'OPRTN';
-
-1 row updated.
-
 SQL> Update department set manager_id = '4' where dept_code = 'ITSUP';
-
-1 row updated.
-
 SQL> Update department set manager_id = '5' where dept_code = 'HR';
-
-1 row updated.
-
 SQL> Update department set manager_id = '1' where dept_code = 'ADMIN';
-
-1 row updated.
-
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\training.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\training.sql;
 SQL> --------------------------------------------------------
 SQL> --  File created - Wednesday-April-16-2014
 SQL> --------------------------------------------------------
 SQL> REM INSERTING into TRAINING
 SQL> SET DEFINE OFF;
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (1,'JAVA1',12,to_date('05-MAY-13','DD-MON-RR'),'Spring IOC, MVC','Need to develop better references.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (2,'PRJM1',13,to_date('06-MAY-12','DD-MON-RR'),'PPM for PMI Certification','It would have been better if we had more hands on experience.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (3,'J2EE',14,to_date('07-MAY-11','DD-MON-RR'),'Struts','Schedule was too tight.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (4,'JAVA1',15,to_date('08-DEC-11','DD-MON-RR'),'Unit testing and regression testing','We need better trainers.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (5,'J2EE',16,to_date('09-MAY-12','DD-MON-RR'),'Black box testing and use cases','Trainers were excellent.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (6,'J2EE',12,to_date('10-MAY-13','DD-MON-RR'),'Struts vs Spring','Very good');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (7,'SQL1',13,to_date('11-MAY-13','DD-MON-RR'),'Mobile development','Trainers voices were too soft');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (8,'SQL1',14,to_date('12-NOV-11','DD-MON-RR'),'Mainframe and assembly','Too long.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (9,'MOBDA',15,to_date('13-DEC-11','DD-MON-RR'),'Wicket, Thymeleaf','Need to explain better the concept of aardvark.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (10,'MOBDA',16,to_date('14-MAY-13','DD-MON-RR'),'IOS Mobile Development','It would be nice if snacks were given.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (11,'MOBDA',16,to_date('14-JUN-13','DD-MON-RR'),'IOS Mobile Development','This is my second take.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (12,'MOBDA',16,to_date('14-JUL-13','DD-MON-RR'),'IOS Mobile Development','This is my third take.');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (13,'JAVA1',12,to_date('05-JUN-13','DD-MON-RR'),'Spring IOC, MVC','Second take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (14,'JAVA1',12,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (15,'JAVA1',12,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
-
-1 row created.
-
 SQL> 
 SQL> -- partB-9 insert
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (16,'SQL2',23,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (17,'SQL2',24,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (18,'PRJM1',16,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (19,'PRJM2',17,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (20,'JAVA1',18,to_date('05-AUG-13','DD-MON-RR'),'Spring IOC, MVC','Third take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (21,'RUBY',7,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (22,'PYTHO',8,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
-
-1 row created.
-
 SQL> Insert into TRAINING (TRAIN_NUM,CODE,EMP_NUM,DATE_ACQUIRED,NAME,COMMENTS) values (23,'PYTHO',1,to_date('05-SEP-13','DD-MON-RR'),'Spring IOC, MVC','Fourth take');
-
-1 row created.
-
 SQL> 
 SQL> 
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\client.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\client.sql;
 SQL> --------------------------------------------------------
 SQL> --  File created - Wednesday-April-16-2014
 SQL> --------------------------------------------------------
 SQL> REM INSERTING into FP.CLIENT
 SQL> SET DEFINE OFF;
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('8282','Quisque Institute','3215 Ac St.','Stamford','CT','84938','Banking','http://blogsearch.google.com/ping/RPC2 ','1-659-703-4221','Noelle Knowles');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('4144','Mollis Non Cursus Foundation','P.O. Box 220, 9243 Gravida Av.','Nampa','ID','91192','Accounting','http://rpc.tailrank.com/ ','1-494-944-1279','Mariam J. Bauer');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('4379','Nisi Company','434-7709 Est. Ave','Erie','PA','10245','Broadcasting','http://rpc.icerocket.com:10080/ ','1-434-720-7301','Iona K. Mcbride');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('6976','Imperdiet Erat Inc.','349 Malesuada. Ave','Memphis','TN','70308','Broadcasting','http://ping.blo.gs/ ','1-618-347-4871','Malcolm D. Hurley');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('8579','Maecenas Iaculis Consulting','P.O. Box 713, 4272 Euismod Rd.','Iowa City','IA','98054','Legal','http://rpc.technorati.com/rpc/ping ','1-436-401-4955','Ocean O. Ratliff');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('1338','In Cursus Et Consulting','P.O. Box 923, 343 Erat Rd.','Minneapolis','MN','65304','Advertising','http://blogdigger.com/RPC2 ','1-370-583-8862','Fritz Dawson');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('3541','Euismod In LLC','Ap #443-6640 Feugiat Av.','Auburn','ME','12600','Legal','http://ping.blo.gs/ ','1-955-423-1667','Martena N. Sharpe');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('3035','Neque Corporation','Ap #903-5850 Nunc Ave','South Portland','ME','55471','Agriculture','http://a2b.cc/setloc/bp.a2b ','1-869-171-2139','Yuri Levine');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('5062','Varius Corporation','9080 Et Rd.','Shreveport','LA','96488','Advertising','http://bblog.com/ping.php ','1-545-382-5397','Shannon Harper');
-
-1 row created.
-
 SQL> Insert into CLIENT (CLIENT_ID,NAME,STREET,CITY,STATE,ZIP_CODE,INDUSTRY,WEB_ADDRESS,PHONE,CONTACT_NAME) values ('8683','Vitae Sodales Nisi Foundation','821-3561 Elit, Avenue','Henderson','NV','90516','Grocery','http://weblogues.com/RPC/ ','1-635-482-9606','Giacomo S. Joseph');
-
-1 row created.
-
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\project.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\project.sql;
 SQL> --------------------------------------------------------
 SQL> --  File created - Wednesday-April-16-2014
 SQL> --------------------------------------------------------
 SQL> REM INSERTING into FP.PROJECT
 SQL> SET DEFINE OFF;
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (60.0,'Real Estate Appraisal for Hilton Hotels',to_date('06-Dec-12'),439174.0,'ACCTG','8683');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (21.0,'Collateral Valuation - BDO',to_date('24-Jan-12'),53333.0,'ACCTG','5062');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (64.0,'Work Flow Simulation of Soybean Factory',to_date('01-Mar-13'),198570.0,'OPRTN','5062');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (67.0,'Process Efficiency Evaluation for Wearhouse Shirts',to_date('22-Jun-13'),350786.0,'OPRTN','8282');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (69.0,'Database Configuration - SSS',to_date('29-Nov-12'),327130.0,'ITSUP','8282');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (99.0,'Ratatouille Kiosk and Web Checkin',to_date('07-Jan-13'),313589.0,'ITSUP','8282');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (70.0,'Internship and Junior Recruitment',to_date('14-Jul-12'),429374.0,'HR','4379');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (16.0,'Anderson Workbench Tool',to_date('01-Jul-13'),400094.0,'HR','5062');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (80.0,'Loratadine Maximus',to_date('03-Mar-14'),382475.0,'OPRTN','4379');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (81.0,'Automatic Appraisal System',to_date('28-Nov-13'),340603.0,'OPRTN','3541');
-
-1 row created.
-
 SQL> 
 SQL> --Part D
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (100.0,'Universal Robina Just In Time Inventory ',to_date('17-Nov-13'),533122.0,'ITSUP','4144');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (101.0,'Proctor and Gable Enterprise Resouce Management',to_date('18-Nov-13'),198570.0,'ACCTG','4379');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (102.0,'Novare Staff Right Sizing',to_date('19-Nov-13'),350786.0,'HR','6976');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (103.0,'Pointwest Technologies Disaster Mangement System',to_date('20-Nov-13'),327130.0,'ACCTG','8579');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (104.0,'Champ Cargosystem Lux',to_date('21-Nov-13'),313589.0,'ITSUP','1338');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (105.0,'Seven Seven Disaster	Risk Assessment',to_date('22-Nov-13'),429574.0,'ITSUP','3541');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (106.0,'Big Pond CMMI Audit',to_date('23-Nov-13'),442094.0,'ITSUP','3035');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (107.0,'Navitaire CMMI Audit',to_date('24-Nov-13'),382475.0,'ITSUP','5062');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (108.0,'Ayala Technologies Effective Recruitment',to_date('25-Nov-13'),340603.0,'HR','8683');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (109.0,'Feasibility Study on Waste Management in Manila',to_date('16-Nov-13'),439374.0,'OPRTN','8282');
-
-1 row created.
-
 SQL> 
 SQL> --Part B 3
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (110.0,'AtCMUA Android mobile application development',to_date('01-Jan-14'),null,'ITSUP','4144');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (111.0,'Option pricer calculator algorithm design',to_date('08-Mar-14'),null,'ACCTG','4379');
-
-1 row created.
-
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (112.0,'Employee satisfication survey',to_date('21-Dec-13'),null,'HR','6976');
-
-1 row created.
-
 SQL> 
 SQL> --Part B 6
 SQL> INSERT INTO PROJECT (PROJ_NUMBER, NAME, START_DATE, TOTAL_COST, DEPT_CODE, CLIENT_ID) VALUES (113.0,'Employee satisfication survey',to_date('21-Dec-13'),null,'HR','6976');
-
-1 row created.
-
 SQL> 
 SQL> commit;
-
-Commit complete.
-
-SQL> start D:\DBM\FP\partA\assignment.sql;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\assignment.sql;
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (1,70.0,15.0,to_date('22-Jul-13'),to_date('11-Dec-13'),170.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (2,69.0,26.0,to_date('24-Jul-13'),to_date('07-Mar-14'),264.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (3,67.0,17.0,to_date('23-Jul-13'),to_date('17-Apr-15'),181.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (4,70.0,16.0,to_date('17-May-13'),to_date('03-Dec-13'),178.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (5,81.0,30.0,to_date('28-Nov-13'),to_date('08-Sep-14'),261.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (6,16.0,13.0,to_date('19-Dec-13'),to_date('24-Dec-15'),295.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (7,16.0,4.0,to_date('01-JUL-13'),to_date('06-Feb-14'),202.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (8,99.0,9.0,to_date('07-JAN-13'),to_date('21-Sep-13'),225.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (9,69.0,6.0,to_date('09-Oct-13'),to_date('18-Mar-14'),186.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (10,64.0,5.0,to_date('02-Dec-13'),to_date('22-May-14'),33.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (11,64.0,30.0,to_date('03-Aug-13'),to_date('21-Dec-14'),197.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (12,16.0,12.0,to_date('01-JUL-13'),to_date('12-Dec-13'),266.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (13,70.0,4.0,to_date('14-Aug-12'),to_date('08-Mar-13'),53.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (14,67.0,17.0,to_date('22-JUN-13'),to_date('10-JUL-13'),99.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (15,69.0,16.0,to_date('17-Jul-13'),to_date('30-Dec-14'),12.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (16,80.0,21.0,to_date('03-MAR-14'),to_date('04-Apr-15'),170.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (17,99.0,26.0,to_date('07-JAN-13'),to_date('27-Aug-13'),22.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (18,70.0,7.0,to_date('17-Jan-13'),to_date('24-Jul-15'),41.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (19,69.0,11.0,to_date('29-NOV-12'),to_date('15-Mar-14'),47.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (20,60,11,to_date('06-DEC-12'),to_date('15-Mar-14'),47.0);
-
-1 row created.
-
 SQL> INSERT INTO ASSIGNMENT (ASSIGN_NUM, PROJ_NUMBER, EMP_NUM, DATE_ASSIGNED, DATE_ENDED, HOURS_USED) VALUES (21,21,12,to_date('24-JAN-12'),to_date('15-Mar-14'),47.0);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (22,100,2,to_date('17-NOV-13','DD-MON-RR'),to_date('17-DEC-13','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (23,100,2,to_date('16-JAN-14','DD-MON-RR'),to_date('15-FEB-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (24,101,3,to_date('18-NOV-13','DD-MON-RR'),to_date('02-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (25,101,3,to_date('01-FEB-14','DD-MON-RR'),to_date('03-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (26,102,8,to_date('19-NOV-13','DD-MON-RR'),to_date('03-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (27,102,8,to_date('02-FEB-14','DD-MON-RR'),to_date('04-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (28,103,10,to_date('20-NOV-13','DD-MON-RR'),to_date('04-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (29,103,10,to_date('03-FEB-14','DD-MON-RR'),to_date('05-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (30,104,14,to_date('21-NOV-13','DD-MON-RR'),to_date('05-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (31,104,14,to_date('04-FEB-14','DD-MON-RR'),to_date('06-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (32,105,18,to_date('22-NOV-13','DD-MON-RR'),to_date('06-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (33,105,18,to_date('05-FEB-14','DD-MON-RR'),to_date('07-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (34,106,19,to_date('23-NOV-13','DD-MON-RR'),to_date('07-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (35,106,19,to_date('06-FEB-14','DD-MON-RR'),to_date('08-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (36,107,20,to_date('24-NOV-13','DD-MON-RR'),to_date('08-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (37,107,20,to_date('07-FEB-14','DD-MON-RR'),to_date('09-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (38,108,22,to_date('25-NOV-13','DD-MON-RR'),to_date('09-JAN-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (39,108,22,to_date('08-FEB-14','DD-MON-RR'),to_date('10-MAR-14','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (40,109,23,to_date('16-NOV-13','DD-MON-RR'),to_date('31-DEC-13','DD-MON-RR'),160);
-
-1 row created.
-
 SQL> 
 SQL> --Part B 3
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (41,110,4,to_date('01-JAN-14','DD-MON-RR'),to_date('18-JAN-14','DD-MON-RR'),300);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (42,110,5,to_date('01-FEB-14','DD-MON-RR'),to_date('31-MAR-14','DD-MON-RR'),320);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (43,111,6,to_date('01-MAR-14','DD-MON-RR'),to_date('31-MAR-14','DD-MON-RR'),400);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (44,111,7,to_date('01-APR-14','DD-MON-RR'),to_date('28-APR-14','DD-MON-RR'),300);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (45,112,9,to_date('01-DEC-13','DD-MON-RR'),to_date('31-DEC-14','DD-MON-RR'),500);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (46,112,11,to_date('01-JAN-13','DD-MON-RR'),to_date('25-JAN-14','DD-MON-RR'),550);
-
-1 row created.
-
 SQL> 
 SQL> --Part B 6
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (47,113,4,to_date('01-JAN-14','DD-MON-RR'),to_date('20-JAN-14','DD-MON-RR'),300);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (48,113,5,to_date('01-JAN-14','DD-MON-RR'),to_date('15-JAN-14','DD-MON-RR'),320);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (49,113,6,to_date('17-JAN-14','DD-MON-RR'),to_date('31-JAN-14','DD-MON-RR'),400);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (50,113,7,to_date('01-FEB-14','DD-MON-RR'),to_date('28-FEB-14','DD-MON-RR'),300);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (51,113,9,to_date('01-MAR-14','DD-MON-RR'),to_date('31-MAR-14','DD-MON-RR'),500);
-
-1 row created.
-
 SQL> Insert into ASSIGNMENT (ASSIGN_NUM,PROJ_NUMBER,EMP_NUM,DATE_ASSIGNED,DATE_ENDED,HOURS_USED) values (52,113,11,to_date('01-APR-14','DD-MON-RR'),to_date('30-APR-14','DD-MON-RR'),550);
-
-1 row created.
-
 SQL> 
 SQL> commit;
+SQL> start C:\Users\ChibeePatag\git\DBFinalProject\partA\listAll.sql;
+SQL> set echo off
+SQL> select * from assignment;
 
-Commit complete.
+ASSIGN_NUM PROJ_NUMBER    EMP_NUM DATE_ASSIG DATE_ENDED HOURS_USED                                                                                                                                                                                        
+---------- ----------- ---------- ---------- ---------- ----------                                                                                                                                                                                        
+         1          70         15 22-JUL-13  11-DEC-13         170                                                                                                                                                                                        
+         2          69         26 24-JUL-13  07-MAR-14         264                                                                                                                                                                                        
+         3          67         17 23-JUL-13  17-APR-15         181                                                                                                                                                                                        
+         4          70         16 17-MAY-13  03-DEC-13         178                                                                                                                                                                                        
+         5          81         30 28-NOV-13  08-SEP-14         261                                                                                                                                                                                        
+         6          16         13 19-DEC-13  24-DEC-15         295                                                                                                                                                                                        
+         7          16          4 01-JUL-13  06-FEB-14         202                                                                                                                                                                                        
+         8          99          9 07-JAN-13  21-SEP-13         225                                                                                                                                                                                        
+         9          69          6 09-OCT-13  18-MAR-14         186                                                                                                                                                                                        
+        10          64          5 02-DEC-13  22-MAY-14          33                                                                                                                                                                                        
+        11          64         30 03-AUG-13  21-DEC-14         197                                                                                                                                                                                        
+        12          16         12 01-JUL-13  12-DEC-13         266                                                                                                                                                                                        
+        13          70          4 14-AUG-12  08-MAR-13          53                                                                                                                                                                                        
+        14          67         17 22-JUN-13  10-JUL-13          99                                                                                                                                                                                        
+        15          69         16 17-JUL-13  30-DEC-14          12                                                                                                                                                                                        
+        16          80         21 03-MAR-14  04-APR-15         170                                                                                                                                                                                        
+        17          99         26 07-JAN-13  27-AUG-13          22                                                                                                                                                                                        
+        18          70          7 17-JAN-13  24-JUL-15          41                                                                                                                                                                                        
+        19          69         11 29-NOV-12  15-MAR-14          47                                                                                                                                                                                        
+        20          60         11 06-DEC-12  15-MAR-14          47                                                                                                                                                                                        
+        21          21         12 24-JAN-12  15-MAR-14          47                                                                                                                                                                                        
+        22         100          2 17-NOV-13  17-DEC-13         160                                                                                                                                                                                        
+        23         100          2 16-JAN-14  15-FEB-14         160                                                                                                                                                                                        
+        24         101          3 18-NOV-13  02-JAN-14         160                                                                                                                                                                                        
+        25         101          3 01-FEB-14  03-MAR-14         160                                                                                                                                                                                        
+        26         102          8 19-NOV-13  03-JAN-14         160                                                                                                                                                                                        
+        27         102          8 02-FEB-14  04-MAR-14         160                                                                                                                                                                                        
+        28         103         10 20-NOV-13  04-JAN-14         160                                                                                                                                                                                        
+        29         103         10 03-FEB-14  05-MAR-14         160                                                                                                                                                                                        
+        30         104         14 21-NOV-13  05-JAN-14         160                                                                                                                                                                                        
+        31         104         14 04-FEB-14  06-MAR-14         160                                                                                                                                                                                        
+        32         105         18 22-NOV-13  06-JAN-14         160                                                                                                                                                                                        
+        33         105         18 05-FEB-14  07-MAR-14         160                                                                                                                                                                                        
+        34         106         19 23-NOV-13  07-JAN-14         160                                                                                                                                                                                        
+        35         106         19 06-FEB-14  08-MAR-14         160                                                                                                                                                                                        
+        36         107         20 24-NOV-13  08-JAN-14         160                                                                                                                                                                                        
+        37         107         20 07-FEB-14  09-MAR-14         160                                                                                                                                                                                        
+        38         108         22 25-NOV-13  09-JAN-14         160                                                                                                                                                                                        
+        39         108         22 08-FEB-14  10-MAR-14         160                                                                                                                                                                                        
+        40         109         23 16-NOV-13  31-DEC-13         160                                                                                                                                                                                        
+        41         110          4 01-JAN-14  18-JAN-14         300                                                                                                                                                                                        
+        42         110          5 01-FEB-14  31-MAR-14         320                                                                                                                                                                                        
+        43         111          6 01-MAR-14  31-MAR-14         400                                                                                                                                                                                        
+        44         111          7 01-APR-14  28-APR-14         300                                                                                                                                                                                        
+        45         112          9 01-DEC-13  31-DEC-14         500                                                                                                                                                                                        
+        46         112         11 01-JAN-13  25-JAN-14         550                                                                                                                                                                                        
+        47         113          4 01-JAN-14  20-JAN-14         300                                                                                                                                                                                        
+        48         113          5 01-JAN-14  15-JAN-14         320                                                                                                                                                                                        
+        49         113          6 17-JAN-14  31-JAN-14         400                                                                                                                                                                                        
+        50         113          7 01-FEB-14  28-FEB-14         300                                                                                                                                                                                        
+        51         113          9 01-MAR-14  31-MAR-14         500                                                                                                                                                                                        
+        52         113         11 01-APR-14  30-APR-14         550                                                                                                                                                                                        
+SQL> select * from client;
 
+CLIENT_ID  NAME                                     STREET                         CITY            ST ZIP_CODE   INDUSTRY        WEB_ADDRESS                              PHONE           CONTACT_NAME                                                    
+---------- ---------------------------------------- ------------------------------ --------------- -- ---------- --------------- ---------------------------------------- --------------- --------------------                                            
+8282       Quisque Institute                        3215 Ac St.                    Stamford        CT 84938      Banking         http://blogsearch.google.com/ping/RPC2   1-659-703-4221  Noelle Knowles                                                  
+4144       Mollis Non Cursus Foundation             P.O. Box 220, 9243 Gravida Av. Nampa           ID 91192      Accounting      http://rpc.tailrank.com/                 1-494-944-1279  Mariam J. Bauer                                                 
+4379       Nisi Company                             434-7709 Est. Ave              Erie            PA 10245      Broadcasting    http://rpc.icerocket.com:10080/          1-434-720-7301  Iona K. Mcbride                                                 
+6976       Imperdiet Erat Inc.                      349 Malesuada. Ave             Memphis         TN 70308      Broadcasting    http://ping.blo.gs/                      1-618-347-4871  Malcolm D. Hurley                                               
+8579       Maecenas Iaculis Consulting              P.O. Box 713, 4272 Euismod Rd. Iowa City       IA 98054      Legal           http://rpc.technorati.com/rpc/ping       1-436-401-4955  Ocean O. Ratliff                                                
+1338       In Cursus Et Consulting                  P.O. Box 923, 343 Erat Rd.     Minneapolis     MN 65304      Advertising     http://blogdigger.com/RPC2               1-370-583-8862  Fritz Dawson                                                    
+3541       Euismod In LLC                           Ap #443-6640 Feugiat Av.       Auburn          ME 12600      Legal           http://ping.blo.gs/                      1-955-423-1667  Martena N. Sharpe                                               
+3035       Neque Corporation                        Ap #903-5850 Nunc Ave          South Portland  ME 55471      Agriculture     http://a2b.cc/setloc/bp.a2b              1-869-171-2139  Yuri Levine                                                     
+5062       Varius Corporation                       9080 Et Rd.                    Shreveport      LA 96488      Advertising     http://bblog.com/ping.php                1-545-382-5397  Shannon Harper                                                  
+8683       Vitae Sodales Nisi Foundation            821-3561 Elit, Avenue          Henderson       NV 90516      Grocery         http://weblogues.com/RPC/                1-635-482-9606  Giacomo S. Joseph                                               
+SQL> select * from department;
+
+DEPT_CODE  NAME                                     LOCATION                                           PHONE           MANAGER_ID                                                                                                                         
+---------- ---------------------------------------- -------------------------------------------------- --------------- ----------                                                                                                                         
+ACCTG      Accounting                               Grouger St. Adelaide                               (408) 777-9220           2                                                                                                                         
+OPRTN      Operations                               Bideford St. Clarence Gardens                      (674) 290-5550           3                                                                                                                         
+ITSUP      IT Support                               Osmena Makati City                                 (273) 961-7241           4                                                                                                                         
+HR         Human Resource                           Osmena Makati City                                 (638) 439-5070           5                                                                                                                         
+ADMIN      Administration                           Victoria Square, Adelaide                          (408) 932-8865           1                                                                                                                         
+SQL> select * from employee;
+
+   EMP_NUM EMP_LAST        EMP_FIRST       HIRE_DATE DOB         SUPER_ID DEPT_CODE                                                                                                                                                                       
+---------- --------------- --------------- --------- --------- ---------- ----------                                                                                                                                                                      
+         1 Blankenship     Jin             09-APR-19 16-APR-74            ADMIN                                                                                                                                                                           
+         2 Bean            Kasimir         27-MAR-11 19-FEB-79          1 ACCTG                                                                                                                                                                           
+         3 Boyle           Benedict        26-MAR-09 28-MAR-63          1 OPRTN                                                                                                                                                                           
+         4 Mcgee           Eugenia         26-MAR-11 13-JUN-74          1 ITSUP                                                                                                                                                                           
+         5 Alford          Brendan         17-MAR-11 21-OCT-60          1 HR                                                                                                                                                                              
+         6 Estes           Chaim           14-MAR-11 22-APR-72          1 OPRTN                                                                                                                                                                           
+         7 Sharp           Fuller          14-MAR-11 05-JUL-81          2 ACCTG                                                                                                                                                                           
+         8 Simon           Maisie          09-MAR-11 03-MAY-89          2 ACCTG                                                                                                                                                                           
+         9 Baldwin         Sybil           14-FEB-09 19-JUN-73          2 ACCTG                                                                                                                                                                           
+        10 Brock           Ava             06-FEB-11 26-JUN-63          2 ACCTG                                                                                                                                                                           
+        11 Matthews        Ori             29-JAN-10 11-JUN-72          2 ACCTG                                                                                                                                                                           
+        12 Holloway        Wynter          16-JAN-13 12-FEB-69          3 OPRTN                                                                                                                                                                           
+        13 Swanson         Margaret        07-JAN-11 27-SEP-79          3 OPRTN                                                                                                                                                                           
+        14 Acevedo         Jolie           05-JAN-08 03-AUG-72          3 OPRTN                                                                                                                                                                           
+        15 Faulkner        Noah            30-NOV-11 21-AUG-65          3 OPRTN                                                                                                                                                                           
+        16 Browning        Nicole          18-NOV-11 05-JUN-87          3 OPRTN                                                                                                                                                                           
+        17 Morrow          Sasha           15-NOV-11 01-MAR-88          4 ITSUP                                                                                                                                                                           
+        18 Montgomery      Baker           08-NOV-11 15-MAY-88          4 ITSUP                                                                                                                                                                           
+        19 Mcguire         Amanda          06-NOV-08 29-SEP-81          4 ITSUP                                                                                                                                                                           
+        20 Maddox          Christian       03-NOV-11 30-SEP-79          4 ITSUP                                                                                                                                                                           
+        21 Drake           Kibo            16-OCT-12 11-MAY-85          4 ITSUP                                                                                                                                                                           
+        22 Butler          Lana            06-OCT-13 09-DEC-89          4 ITSUP                                                                                                                                                                           
+        23 Noel            Amery           03-OCT-11 02-AUG-79          5 HR                                                                                                                                                                              
+        24 Nguyen          Lane            30-SEP-11 02-JUN-83          5 HR                                                                                                                                                                              
+        25 Wooten          Alexa           29-SEP-11 11-JUN-87          5 HR                                                                                                                                                                              
+        26 Barry           Phillip         15-SEP-11 06-JAN-66          5 HR                                                                                                                                                                              
+        27 Lloyd           Mia             14-SEP-10 12-MAY-79          5 HR                                                                                                                                                                              
+        28 Kemp            Natalie         04-SEP-11 18-AUG-71          1 ADMIN                                                                                                                                                                           
+        29 Bernard         Ashton          23-AUG-12 16-APR-81          1 ADMIN                                                                                                                                                                           
+        30 Halliwel        Piper           12-SEP-13 16-NOV-71          1 OPRTN                                                                                                                                                                           
+SQL> set echo off
+SQL> select * from project;
+
+PROJ_NUMBER NAME                                                         START_DATE TOTAL_COST DEPT_CODE  CLIENT_ID                                                                                                                                       
+----------- ------------------------------------------------------------ ---------- ---------- ---------- ----------                                                                                                                                      
+         60 Real Estate Appraisal for Hilton Hotels                      06-DEC-12      439174 ACCTG      8683                                                                                                                                            
+         21 Collateral Valuation - BDO                                   24-JAN-12       53333 ACCTG      5062                                                                                                                                            
+         64 Work Flow Simulation of Soybean Factory                      01-MAR-13      198570 OPRTN      5062                                                                                                                                            
+         67 Process Efficiency Evaluation for Wearhouse Shirts           22-JUN-13      350786 OPRTN      8282                                                                                                                                            
+         69 Database Configuration - SSS                                 29-NOV-12      327130 ITSUP      8282                                                                                                                                            
+         99 Ratatouille Kiosk and Web Checkin                            07-JAN-13      313589 ITSUP      8282                                                                                                                                            
+         70 Internship and Junior Recruitment                            14-JUL-12      429374 HR         4379                                                                                                                                            
+         16 Anderson Workbench Tool                                      01-JUL-13      400094 HR         5062                                                                                                                                            
+         80 Loratadine Maximus                                           03-MAR-14      382475 OPRTN      4379                                                                                                                                            
+         81 Automatic Appraisal System                                   28-NOV-13      340603 OPRTN      3541                                                                                                                                            
+        100 Universal Robina Just In Time Inventory                      17-NOV-13      533122 ITSUP      4144                                                                                                                                            
+        101 Proctor and Gable Enterprise Resouce Management              18-NOV-13      198570 ACCTG      4379                                                                                                                                            
+        102 Novare Staff Right Sizing                                    19-NOV-13      350786 HR         6976                                                                                                                                            
+        103 Pointwest Technologies Disaster Mangement System             20-NOV-13      327130 ACCTG      8579                                                                                                                                            
+        104 Champ Cargosystem Lux                                        21-NOV-13      313589 ITSUP      1338                                                                                                                                            
+        105 Seven Seven Disaster  Risk Assessment                        22-NOV-13      429574 ITSUP      3541                                                                                                                                            
+        106 Big Pond CMMI Audit                                          23-NOV-13      442094 ITSUP      3035                                                                                                                                            
+        107 Navitaire CMMI Audit                                         24-NOV-13      382475 ITSUP      5062                                                                                                                                            
+        108 Ayala Technologies Effective Recruitment                     25-NOV-13      340603 HR         8683                                                                                                                                            
+        109 Feasibility Study on Waste Management in Manila              16-NOV-13      439374 OPRTN      8282                                                                                                                                            
+        110 AtCMUA Android mobile application development                01-JAN-14             ITSUP      4144                                                                                                                                            
+        111 Option pricer calculator algorithm design                    08-MAR-14             ACCTG      4379                                                                                                                                            
+        112 Employee satisfication survey                                21-DEC-13             HR         6976                                                                                                                                            
+        113 Employee satisfication survey                                21-DEC-13             HR         6976                                                                                                                                            
+SQL> select * from skill;
+
+CODE  DESCRIPTION                                                                                                                                                                                                                                         
+----- --------------------------------------------------                                                                                                                                                                                                  
+JAVA1 Basic programming with Java                                                                                                                                                                                                                         
+JAVA2 Advanced programming with Java                                                                                                                                                                                                                      
+J2EE  Java Enterprise Edition - servlets, jsp, servers                                                                                                                                                                                                    
+SQL1  Basic queries using oracle SQL                                                                                                                                                                                                                      
+SQL2  Advance qureies using oracle SQL                                                                                                                                                                                                                    
+PRJM1 Project management 1 for PMI certification                                                                                                                                                                                                          
+PRJM2 IT Project mangement for PMI certification                                                                                                                                                                                                          
+RUBY  Web development with Ruby on rails                                                                                                                                                                                                                  
+PYTHO Web development with Python                                                                                                                                                                                                                         
+MOBDA Android mobile development                                                                                                                                                                                                                          
+SQL> set echo off
+SQL> select * from training;
+
+ TRAIN_NUM CODE     EMP_NUM DATE_ACQUIRED NAME                                COMMENTS                                                                                                                                                                    
+---------- ----- ---------- ------------- ----------------------------------- -------------------------------------------------------------                                                                                                               
+         1 JAVA1         12 05-MAY-13     Spring IOC, MVC                     Need to develop better references.                                                                                                                                          
+         2 PRJM1         13 06-MAY-12     PPM for PMI Certification           It would have been better if we had more hands on experience.                                                                                                               
+         3 J2EE          14 07-MAY-11     Struts                              Schedule was too tight.                                                                                                                                                     
+         4 JAVA1         15 08-DEC-11     Unit testing and regression testing We need better trainers.                                                                                                                                                    
+         5 J2EE          16 09-MAY-12     Black box testing and use cases     Trainers were excellent.                                                                                                                                                    
+         6 J2EE          12 10-MAY-13     Struts vs Spring                    Very good                                                                                                                                                                   
+         7 SQL1          13 11-MAY-13     Mobile development                  Trainers voices were too soft                                                                                                                                               
+         8 SQL1          14 12-NOV-11     Mainframe and assembly              Too long.                                                                                                                                                                   
+         9 MOBDA         15 13-DEC-11     Wicket, Thymeleaf                   Need to explain better the concept of aardvark.                                                                                                                             
+        10 MOBDA         16 14-MAY-13     IOS Mobile Development              It would be nice if snacks were given.                                                                                                                                      
+        11 MOBDA         16 14-JUN-13     IOS Mobile Development              This is my second take.                                                                                                                                                     
+        12 MOBDA         16 14-JUL-13     IOS Mobile Development              This is my third take.                                                                                                                                                      
+        13 JAVA1         12 05-JUN-13     Spring IOC, MVC                     Second take                                                                                                                                                                 
+        14 JAVA1         12 05-AUG-13     Spring IOC, MVC                     Third take                                                                                                                                                                  
+        15 JAVA1         12 05-SEP-13     Spring IOC, MVC                     Fourth take                                                                                                                                                                 
+        16 SQL2          23 05-AUG-13     Spring IOC, MVC                     Third take                                                                                                                                                                  
+        17 SQL2          24 05-SEP-13     Spring IOC, MVC                     Fourth take                                                                                                                                                                 
+        18 PRJM1         16 05-AUG-13     Spring IOC, MVC                     Third take                                                                                                                                                                  
+        19 PRJM2         17 05-SEP-13     Spring IOC, MVC                     Fourth take                                                                                                                                                                 
+        20 JAVA1         18 05-AUG-13     Spring IOC, MVC                     Third take                                                                                                                                                                  
+        21 RUBY           7 05-SEP-13     Spring IOC, MVC                     Fourth take                                                                                                                                                                 
+        22 PYTHO          8 05-SEP-13     Spring IOC, MVC                     Fourth take                                                                                                                                                                 
+        23 PYTHO          1 05-SEP-13     Spring IOC, MVC                     Fourth take                                                                                                                                                                 
 SQL> spool out

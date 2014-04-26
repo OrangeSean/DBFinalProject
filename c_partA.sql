@@ -10,4 +10,5 @@ start C:\Users\ChibeePatag\git\DBFinalProject\partA\training.sql;
 start C:\Users\ChibeePatag\git\DBFinalProject\partA\client.sql;
 start C:\Users\ChibeePatag\git\DBFinalProject\partA\project.sql;
 start C:\Users\ChibeePatag\git\DBFinalProject\partA\assignment.sql;
+start C:\Users\ChibeePatag\git\DBFinalProject\partA\listAll.sql;
 spool out
