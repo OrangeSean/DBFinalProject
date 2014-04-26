@@ -297,23 +297,23 @@ SQL> CLEAR COLUMN
 SQL> COLUMN "DEPARTMENT" FORMAT A30
 SQL> SELECT DEPARTMENT.NAME "DEPARTMENT",
   2  	     SKILL.CODE "SKILL", COUNT(TRAIN_NUM) "TRAIN TIMES",
-  3  	     RANK() OVER (ORDER BY COUNT(SKILL.CODE) DESC) AS "RANK"
+  3  	     RANK() OVER (PARTITION BY (DEPARTMENT.DEPT_CODE) ORDER BY COUNT(SKILL.CODE) DESC) AS "DEPT RANK"
   4  FROM EMPLOYEE JOIN TRAINING ON EMPLOYEE.EMP_NUM = TRAINING.EMP_NUM
   5  	     JOIN SKILL ON SKILL.CODE = TRAINING.CODE
   6  	     JOIN DEPARTMENT ON DEPARTMENT.DEPT_CODE= EMPLOYEE.DEPT_CODE
   7  GROUP BY DEPARTMENT.DEPT_CODE, DEPARTMENT.NAME, SKILL.CODE;
 
-DEPARTMENT                     SKILL TRAIN TIMES       RANK                                                                                                                         
+DEPARTMENT                     SKILL TRAIN TIMES  DEPT RANK                                                                                                                         
 ------------------------------ ----- ----------- ----------                                                                                                                         
+Accounting                     RUBY            1          1                                                                                                                         
+Accounting                     PYTHO           1          1                                                                                                                         
+Administration                 PYTHO           1          1                                                                                                                         
+Human Resource                 SQL2            2          1                                                                                                                         
+IT Support                     JAVA1           1          1                                                                                                                         
+IT Support                     PRJM2           1          1                                                                                                                         
 Operations                     JAVA1           5          1                                                                                                                         
 Operations                     MOBDA           4          2                                                                                                                         
 Operations                     J2EE            3          3                                                                                                                         
-Operations                     SQL1            2          4                                                                                                                         
 Operations                     PRJM1           2          4                                                                                                                         
-Human Resource                 SQL2            2          4                                                                                                                         
-IT Support                     JAVA1           1          7                                                                                                                         
-Accounting                     RUBY            1          7                                                                                                                         
-Administration                 PYTHO           1          7                                                                                                                         
-Accounting                     PYTHO           1          7                                                                                                                         
-IT Support                     PRJM2           1          7                                                                                                                         
+Operations                     SQL1            2          4                                                                                                                         
 SQL> spool out
