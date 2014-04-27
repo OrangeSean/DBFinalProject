@@ -1,4 +1,8 @@
 # query output files
 output/
+temp.txt
 
 # output text
+
+# project files
+.project

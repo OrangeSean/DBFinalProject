@@ -1,5 +1,6 @@
+spool d:\dbm\fp\temp.txt
 TTITLE 'Employee Information'
-set pagesize 100 linesize 150
+set pagesize 41 linesize 150
 column employee format A18
 column supervisor format A16
 column Skill word_wrapped format A40
@@ -17,3 +18,4 @@ from employee e inner join employee s on e.super_id = s.emp_num
                 inner join skill sk   on t.code = sk.code
 order by e.emp_last;
 set linesize 180 pagesize 200
+spool out
